@@ -1,10 +1,8 @@
-from typing import TypeVar, Generic, Type, NamedTuple
 from abc import ABC, abstractmethod
+from typing import NamedTuple, Type
 
-DataType = TypeVar('DataType', bound=NamedTuple)
 
-
-class RequestService(ABC, Generic[DataType]):
+class RequestService[DataType: NamedTuple](ABC):
     @staticmethod
     def to_dict(data: DataType) -> dict:
         return data._asdict()
