@@ -1,15 +1,19 @@
-from core.services.ExampleService import ExampleService, WeatherDTO
+from logs.logger import loggable
 from config import *
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+import logging
 import uvicorn
 
 CONFIG = Config()
+logger = logging.getLogger(__name__)
+
 app = FastAPI()
 
 
 @app.get("/")
-async def root():
-    return {"Hello": "World"}
+@loggable
+async def root(request: Request):
+    return "<div>Hello</div>"
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
