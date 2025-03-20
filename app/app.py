@@ -1,14 +1,19 @@
-from config import *
-from fastapi import FastAPI
+import logging
+from fastapi import FastAPI, Request
 import uvicorn
+from config import *
+from logs.logger import loggable
 
 CONFIG = Config()
+logger = logging.getLogger(__name__)
+
 app = FastAPI()
 
 
 @app.get("/")
-async def root():
-    return {"Hello": "World"}
+@loggable
+async def root(request: Request):
+    return {"content": {"Hello": "World"}, "status_code": 200}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

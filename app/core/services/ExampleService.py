@@ -1,14 +1,16 @@
 from typing import NamedTuple
-from .shared.RequestService import RequestService
 
+from pydantic import BaseModel
+
+from .shared.ABRequestService import ABRequestService
 
 # must be in entities folder, here just for an example
-class WeatherDTO(NamedTuple):
+class WeatherDTO(BaseModel):
     prp: str
     ppp: str
 
 
-class ExampleService(RequestService[WeatherDTO]):
+class ExampleService(ABRequestService[WeatherDTO]):
     @staticmethod
     def request() -> WeatherDTO:
         # request logic
