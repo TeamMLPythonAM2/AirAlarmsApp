@@ -19,4 +19,5 @@ def loggable(endpoint):
             return response
         except Exception as e:
             logging.error(f'{request.method} : {request.url} >> {e}')
+            return {"content": str(e), "status_code": 500}
     return wrapper
