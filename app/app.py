@@ -1,4 +1,3 @@
-from core.services.ExampleService import ExampleService, WeatherDTO
 from config import *
 from fastapi import FastAPI
 import uvicorn
