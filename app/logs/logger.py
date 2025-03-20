@@ -13,7 +13,10 @@ logging.basicConfig(
 def loggable(endpoint):
     @wraps(endpoint)
     async def wrapper(request: Request = None, *args, **kwargs):
-        response: dict = await endpoint(request, *args, **kwargs)
-        logging.info(f'{request.method} : {request.url} >> {response.get("status_code")}')
-        return response
+        try:
+            response: dict = await endpoint(request, *args, **kwargs)
+            logging.info(f'{request.method} : {request.url} >> {response.get("status_code")} >> {response.get("content")}')
+            return response
+        except Exception as e:
+            logging.error(f'{request.method} : {request.url} >> {e}')
     return wrapper

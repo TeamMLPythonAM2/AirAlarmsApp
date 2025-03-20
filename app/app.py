@@ -13,7 +13,7 @@ app = FastAPI()
 @app.get("/")
 @loggable
 async def root(request: Request):
-    return {"Hello": "World", "status_code": 200}
+    return {"content": {"Hello": "World"}, "status_code": 200}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
