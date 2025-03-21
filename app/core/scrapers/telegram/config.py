@@ -37,6 +37,7 @@ class Config:
 
     CHANNEL_IDS_LIST = [
         -1001223955273,
+        -1001779278127
     ]
 
 CHANNEL_URLS_LIST = [

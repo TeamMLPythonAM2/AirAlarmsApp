@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import typing
+from itertools import chain
 from app.core.scrapers.telegram.config import Config
 
 import telethon
@@ -11,18 +12,9 @@ from .. import settings
 from ..dict_types.dialog import DialogMetadata
 from ..dict_types.message import MessageAttributes, MessageType, PeerID
 from ..utils import async_retry
+from ..loader.csv import CSVMessageWriter
 
 logger = logging.getLogger(__name__)
-
-
-class DialogReader(typing.Protocol):
-    def read_dialog(self, dialog_id: int) -> DialogMetadata: ...
-
-
-class MessageWriter(typing.Protocol):
-    def write_messages(
-        self, dialog: DialogMetadata, messages: list[MessageAttributes]
-    ) -> None: ...
 
 
 class MessageDownloader:
@@ -33,7 +25,6 @@ class MessageDownloader:
 
     Attributes:
         client (telethon.TelegramClient): Telegram client for fetching the messages
-        dialog_reader (DialogReader): Dialog reader for reading the dialogs
         message_writer (MessageWriter): Message writer for saving the messages
         reactions_limit_per_message (int): maximum amount of reactions to fetch per message
     """
@@ -41,13 +32,11 @@ class MessageDownloader:
     def __init__(
         self,
         client: telethon.TelegramClient,
-        dialog_reader: DialogReader,
-        message_writer: MessageWriter,
+        message_writer: CSVMessageWriter,
         *,
         reactions_limit_per_message: int,
     ) -> None:
         self.client = client
-        self.dialog_reader = dialog_reader
         self.message_writer = message_writer
         self.reactions_limit_per_message = reactions_limit_per_message
         self._semaphore = asyncio.Semaphore(5)
@@ -70,55 +59,12 @@ class MessageDownloader:
         """
         Reformat a single message to a more convenient data structure.
         """
-        # fwd_from = (
-        #     telethon.utils.get_peer_id(message.fwd_from.from_id)
-        #     if message.fwd_from and message.fwd_from.from_id
-        #     else None
-        # )
-        # from_id = (
-        #     telethon.utils.get_peer_id(message.from_id) if message.from_id else None
-        # )
-
         msg_attributes: MessageAttributes = {
             "channel_id": channel_id,
             "id": message.id,
             "date": message.date,
-            # "from_id": PeerID(from_id) if from_id else None,
-            # "fwd_from": PeerID(fwd_from) if fwd_from else None,
-            "message": message.message or "",
-            # "type": MessageType.TEXT,
-            "duration": None,
-            # "to_id": PeerID(telethon.utils.get_peer_id(message.to_id)),
-            # "reactions": {},
+            "message": message.message or ""
         }
-
-        # if media := message.media:
-        #     # For stickers, videos, and voice messages
-        #     if (
-        #         isinstance(media, tl_types.MessageMediaDocument)
-        #         and media.document
-        #         and not isinstance(media.document, tl_types.DocumentEmpty)
-        #     ):
-        #         for attribute in media.document.attributes:
-        #             if isinstance(attribute, tl_types.DocumentAttributeSticker):
-        #                 msg_attributes["message"] = attribute.alt
-        #                 msg_attributes["type"] = MessageType.STICKER
-        #                 break
-        #
-        #             if isinstance(attribute, tl_types.DocumentAttributeVideo):
-        #                 msg_attributes["duration"] = attribute.duration
-        #                 msg_attributes["type"] = MessageType.VIDEO
-        #                 break
-        #
-        #             if (
-        #                 isinstance(attribute, tl_types.DocumentAttributeAudio)
-        #                 and attribute.voice
-        #             ):
-        #                 msg_attributes["duration"] = attribute.duration
-        #                 msg_attributes["type"] = MessageType.VOICE
-        #                 break
-        #     elif isinstance(message.media, tl_types.MessageMediaPhoto):
-        #         msg_attributes["type"] = MessageType.PHOTO
 
         return msg_attributes
 
@@ -153,7 +99,7 @@ class MessageDownloader:
             logger.debug("channel is broadcast: cannot retrieve reactions from message")
             reactions = {}
         except telethon.errors.MsgIdInvalidError:
-            # logger.debug("message %d not found", message.id)
+            logger.debug("message %d not found", message.id)
             reactions = {}
         else:
             reaction_objects = result.reactions
@@ -174,40 +120,40 @@ class MessageDownloader:
         """
 
         logger.debug("dialog #%d: creating message iterator", dialog["id"])
-        try:
-            tg_entity = await self.client.get_entity(dialog["id"])
-        except ValueError as e:
-            logger.error("dialog #%d: %s", dialog["id"], e)
-            logger.info("init dialog %d through member username", dialog["id"])
-
-            username = None
-            try:
-                dialog_metadata = self.dialog_reader.read_dialog(dialog["id"])
-            except FileNotFoundError:
-                logger.error("dialog #%d: not found", dialog["id"])
-                raise
-
-            if (
-                "users" in dialog_metadata
-                and len(dialog_metadata["users"]) == 1
-                and "username" in dialog_metadata["users"][0]
-            ):
-                username = dialog_metadata["users"][0]["username"]
-            else:
-                logger.error("dialog #%d: not a private chat", dialog["id"])
-                return
-
-            if not username:
-                # * user found, but username is empty
-                logger.error(
-                    "dialog #%d: single user found, but username is empty", dialog["id"]
-                )
-                raise ValueError("username is empty") from e
-
-            tg_entity = await self.client.get_input_entity(username)
-        except Exception as e:  # pylint: disable=broad-except
-            logger.error("dialog #%d: %s", dialog["id"], e)
-            return
+        # try:
+        tg_entity = await self.client.get_entity(dialog["id"])
+        # except ValueError as e:
+        #     logger.error("dialog #%d: %s", dialog["id"], e)
+        #     logger.info("init dialog %d through member username", dialog["id"])
+        #
+        #     username = None
+        #     try:
+        #         # dialog_metadata = self.dialog_reader.read_dialog(dialog["id"])
+        #     except FileNotFoundError:
+        #         logger.error("dialog #%d: not found", dialog["id"])
+        #         raise
+        #
+        #     if (
+        #         "users" in dialog_metadata
+        #         and len(dialog_metadata["users"]) == 1
+        #         and "username" in dialog_metadata["users"][0]
+        #     ):
+        #         username = dialog_metadata["users"][0]["username"]
+        #     else:
+        #         logger.error("dialog #%d: not a private chat", dialog["id"])
+        #         return
+        #
+        #     if not username:
+        #         # * user found, but username is empty
+        #         logger.error(
+        #             "dialog #%d: single user found, but username is empty", dialog["id"]
+        #         )
+        #         raise ValueError("username is empty") from e
+        #
+        #     tg_entity = await self.client.get_input_entity(username)
+        # except Exception as e:  # pylint: disable=broad-except
+        #     logger.error("dialog #%d: %s", dialog["id"], e)
+        #     return
 
         if isinstance(tg_entity, list):
             tg_entity = tg_entity[0]
@@ -219,14 +165,12 @@ class MessageDownloader:
                 break
             yield message
 
-    async def _download_dialog(self, dialog: DialogMetadata) -> None:
+    async def _get_dialog_messages(self, dialog: DialogMetadata) -> list[MessageAttributes]:
         """
         Download messages from a single dialog and save them.
         """
         logger.info("dialog #%d: downloading messages...", dialog["id"])
         dialog_messages: list[MessageAttributes] = []
-
-        # is_broadcast_channel: bool | None = None
         msg_count = 0
 
         async for m in self._get_message_iterator(dialog):
@@ -239,41 +183,23 @@ class MessageDownloader:
             if not await self._is_relevant_message(m.message or ''):
                 continue
 
-            msg_attrs = self._reformat_message(m, dialog['id'])
+            dialog_messages.append(self._reformat_message(m, dialog['id']))
 
-            # if is_broadcast_channel is None and isinstance(
-            #     m.peer_id, tl_types.PeerChannel
-            # ):
-            #     channel = await self.client.get_entity(m.peer_id)
-            #     assert isinstance(channel, tl_types.Channel)
-            #     is_broadcast_channel = channel.broadcast
-            # if not is_broadcast_channel:
-            #     # * avoid getting reactions for broadcast channels
-            #     peer = typing.cast(
-            #         tl_types.TypeInputPeer, telethon.utils.get_peer(dialog["id"])
-            #     )  # * cast because dialog is tl_types.TypeInputPeer
-                # msg_attrs["reactions"] = {
-                #     k: v.emoticon
-                #     for k, v in (await self._get_message_reactions(m, peer)).items()
-                # }
-
-            dialog_messages.append(msg_attrs)
-
-        self.message_writer.write_messages(dialog, dialog_messages)
-        logger.info("dialog #%d: messages downloaded", dialog["id"])
+        return dialog_messages
+        # logger.info("dialog #%d: messages downloaded", dialog["id"])
 
     @staticmethod
     async def _is_relevant_message(message: str) -> bool:
         return any(word in message.lower() for word in Config.TARGET_WORDS)
 
-    async def _semaphored_download_dialog(self, *args, **kwargs):
+    async def _semaphored_download_dialog(self, *args, **kwargs) -> list[MessageAttributes]:
         """
         A utility function to restrict throughput of `_download_dialog` method.
         It is necessary due to Telegram's request rate limits, which produces
         "429 Too Many Requests" errors.
         """
         async with self._semaphore:
-            await self._download_dialog(*args, **kwargs)
+            return await self._get_dialog_messages(*args, **kwargs)
 
     async def download_dialogs(self, dialogs: list[DialogMetadata]) -> None:
         """
@@ -284,6 +210,9 @@ class MessageDownloader:
         for dialog in dialogs:
             # TODO: up for debate: move semaphored download to a decorator
             tasks.append(self._semaphored_download_dialog(dialog))
-        await asyncio.gather(*tasks)
+        dialogs_messages = await asyncio.gather(*tasks)
+        messages = list(chain.from_iterable(dialogs_messages))
+        self.message_writer.write_messages(messages, self.min_date, self.max_date)
+
         logger.info("all dialogs downloaded")
         return

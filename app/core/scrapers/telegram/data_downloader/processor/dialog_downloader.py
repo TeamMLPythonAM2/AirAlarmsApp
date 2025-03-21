@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import typing
 from app.core.scrapers.telegram.config import Config
 
 import telethon
@@ -12,31 +11,21 @@ from ..dict_types.dialog import DialogMemberData, DialogMetadata, DialogType
 logger = logging.getLogger(__name__)
 
 
-class DialogWriter(typing.Protocol):
-    def write_dialog(self, data: DialogMetadata) -> None: ...
-
-
 class DialogDownloader:
     """
     Class for downloading and saving metadata of all user's dialogs.
 
     Attributes:
         telegram_client (telethon.TelegramClient): Telegram client for fetching the dialogs
-        dialog_writer (DialogWriter): Dialog writer for saving the dialogs
     """
 
-    def __init__(
-        self,
-        telegram_client: telethon.TelegramClient,
-        dialog_writer: DialogWriter,
-    ):
-        self.dialog_writer = dialog_writer
+    def __init__(self, telegram_client: telethon.TelegramClient):
         self.client = telegram_client
 
-    async def get_dialogs(self) -> list[DialogMemberData]:
+    async def get_dialogs(self) -> list[DialogMetadata]:
         """
         Returns:
-            list[DialogMemberData]: KALL if the save was successful
+            KALL list]: if the save was successful
         """
         logger.debug("retrieving dialog list...")
         dialogs: list[tl_custom.Dialog] = await self.client.get_dialogs()
@@ -45,6 +34,7 @@ class DialogDownloader:
         tasks = []
         # * process each dialog asynchronously, therefore increasing throughput
         for dialog in dialogs:
+            # print(f'{dialog.name} : {dialog.id}')
             if dialog.id not in Config.CHANNEL_IDS_LIST:
                 continue
             task = asyncio.create_task(self._save_dialog(dialog))
@@ -52,8 +42,6 @@ class DialogDownloader:
 
         # logger.debug("gathering dialog saving tasks...")
         dialogs_metadata = await asyncio.gather(*tasks)
-        # print(dialogs_info)
-
         # logger.info("dialogs list saved successfully")
         return dialogs_metadata
 
@@ -61,7 +49,6 @@ class DialogDownloader:
     async def _save_dialog(dialog: tl_custom.Dialog):
         dialog_id = dialog.id
         dialog_name = dialog.name
-        # dialog_members: list[DialogMemberData] = []
 
         logger.info("dialog #%d: starting processing...", dialog_id)
 
@@ -72,53 +59,8 @@ class DialogDownloader:
         }
         dialog_type = type_to_enum.get(True, DialogType.UNKNOWN)
 
-        # logger.debug("dialog #%d: getting participants...", dialog_id)
-        # try:
-        #     users: list[tl_types.User] = await self.client.get_participants(dialog)
-        # except telethon.errors.ChatAdminRequiredError as e:
-        #     logger.error(
-        #         "dialog #%d: getting participants: admin required: %s", dialog_id, e
-        #     )
-        # except telethon.errors.ChannelPrivateError as e:
-        #     logger.error(
-        #         "dialog #%d: getting participants: channel private: %s", dialog_id, e
-        #     )
-        # except telethon.errors.ChannelInvalidError as e:
-        #     logger.error(
-        #         "dialog #%d: getting participants: channel invalid: %s", dialog_id, e
-        #     )
-        # except telethon.errors.RPCError as e:
-        #     logger.error(
-        #         "dialog #%d: getting participants: unknown error: %s", dialog_id, e
-        #     )
-        # else:
-        #     logger.debug("dialog #%d: processing participants...", dialog_id)
-        #     dialog_members = [
-        #         DialogMemberData(
-        #             user_id=user.id,
-        #             first_name=user.first_name,
-        #             last_name=user.last_name,
-        #             username=user.username,
-        #             phone=user.phone,
-        #         )
-        #         for user in users
-        #         if user.username is not None
-        #     ]  # * list comprehension is generally faster than for loop
-
         return DialogMetadata(
             id=dialog_id,
             name=dialog_name,
-            type=dialog_type,
-            # users=dialog_members,
+            type=dialog_type
         )
-
-        # self.dialog_writer.write_dialog(
-        #     DialogMetadata(
-        #         id=dialog_id,
-        #         name=dialog_name,
-        #         type=dialog_type,
-        #         # users=dialog_members,
-        #     )
-        # )
-        #
-        # logger.info("dialog #%d: successfully saved", dialog_id)

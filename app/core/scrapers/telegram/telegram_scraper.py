@@ -1,34 +1,28 @@
 import datetime as dt
 import asyncio
+import telethon
 
 from data_downloader.factory import (
     create_dialog_downloader,
     create_telegram_client,
+    create_message_downloader
 )
-
-# from typing import Callable
-import telethon
-
 from data_downloader import settings
 from app.core.scrapers.telegram.exceptions import (
     UninitializedTakeoutSessionException,
     InvalidDateRangeException
 )
-# from data_downloader.dict_types.dialog import DialogMetadata, DialogType
-from data_downloader.factory import (
-    create_json_dialog_reader_writer,
-    create_message_downloader
-)
+
 
 class TelegramScraper:
     @classmethod
-    async def scrape(cls, date: dt.datetime, end_date: dt.datetime = None): # -> list[TelegramDTO]:
+    async def scrape(cls, target_date: dt.datetime, end_date: dt.datetime = None): # -> list[TelegramDTO]:
         if end_date is None:
-            max_date = date.replace(minute=0, second=0, microsecond=0)
+            max_date = target_date.replace(minute=0, second=0, microsecond=0)
             min_date = max_date - dt.timedelta(hours=1)
         else:
             max_date = end_date.replace(minute=0, second=0, microsecond=0)
-            min_date = date.replace(minute=0, second=0, microsecond=0)
+            min_date = target_date.replace(minute=0, second=0, microsecond=0)
 
         if max_date <= min_date:
             raise InvalidDateRangeException("Maximum date must be later than the minimum date.")
@@ -41,12 +35,7 @@ class TelegramScraper:
 
         async with client:
             dialogs = await dialog_downloader.get_dialogs()
-        # return
-        # dialog_reader = create_json_dialog_reader_writer()
-        # dialogs = dialog_reader.read_all_dialogs()
 
-        # client = create_telegram_client('session')
-        # print("downloading dialogs...")
         async with client:
             try:
                 async with client.takeout(

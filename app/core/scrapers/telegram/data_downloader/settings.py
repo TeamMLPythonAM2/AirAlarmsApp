@@ -22,8 +22,7 @@ MESSAGE_REACTION_EXPONENTIAL_BACKOFF_SLEEP_TIME=5.0
 MESSAGE_REACTION_EXPONENTIAL_BACKOFF_MAX_TRIES=5
 
 # File export paths
-DIALOGS_DATA_FOLDER = Path("./data/dialogs" or BASE_PATH / "data" / "dialogs_data").resolve()
-DIALOGS_LIST_FOLDER = Path("./data/dialogs_meta" or BASE_PATH / "data" / "dialogs_meta").resolve()
+DATA_FOLDER = Path("./data" or BASE_PATH / "data").resolve()
 
 # https://core.telegram.org/api/takeout
 # Options for the takeout method.

@@ -21,4 +21,3 @@ class DialogMetadata(TypedDict):
     id: int
     name: str
     type: DialogType
-    # users: list[DialogMemberData]
