@@ -6,5 +6,6 @@ load_dotenv(ROOT_PATH)
 
 
 class Config:
-    TEST_SECRET = environ.get('TEST_SECRET')
-
+    API_ID: int = environ.get('API_ID')
+    API_HASH: str = environ.get('API_HASH')
+    API_PHONE: str = environ.get('API_PHONE')
