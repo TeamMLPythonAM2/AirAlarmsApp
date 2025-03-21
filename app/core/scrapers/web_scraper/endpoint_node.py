@@ -1,5 +1,6 @@
+from consts import ENDPOINT_PATTERN, URL_PATTERN
 from pydantic import BaseModel
-from consts import URL_PATTERN, ENDPOINT_PATTERN
+
 
 class EndpointNode(BaseModel):
     base_url: URL_PATTERN

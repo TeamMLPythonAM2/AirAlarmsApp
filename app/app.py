@@ -1,5 +1,5 @@
-from core.services.ExampleService import ExampleService, WeatherDTO
 from config import *
+from core.services.ExampleService import ExampleService, WeatherDTO
 
 CONFIG = Config()
 

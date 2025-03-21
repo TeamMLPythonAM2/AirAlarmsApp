@@ -1,4 +1,5 @@
 from typing import NamedTuple
+
 from .shared.RequestService import RequestService
 
 
