@@ -2,7 +2,6 @@ import asyncio
 import gzip
 import json
 import os
-from typing import Optional
 
 import regex as re
 
