@@ -1,3 +1,7 @@
 fastapi
 uwsgi
 dotenv
+beautifulsoup4
+requests
+regex
+pydantic

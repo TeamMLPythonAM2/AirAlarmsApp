@@ -1,8 +1,7 @@
 from dotenv import load_dotenv
 from os import environ
 
-ROOT_PATH = './../.env'
-load_dotenv(ROOT_PATH)
+load_dotenv()
 
 
 class Config:
