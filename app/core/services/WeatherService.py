@@ -1,12 +1,13 @@
 from app.core.consts import WEATHER_API_KEY, WEATHER_API_URL
 from app.core.entities.WeatherDTO import WeatherDTO
 from shared.ABRequestService import ABRequestService
-import requests
+import aiohttp
+import asyncio
 
 
 class WeatherService(ABRequestService[list[WeatherDTO]]):
     @staticmethod
-    def request(location="Kyiv", unit_group="metric") -> list[WeatherDTO]:
+    async def request(location="Kyiv", unit_group="metric") -> list[WeatherDTO]:
         params = {
             "key": WEATHER_API_KEY,
             "unitGroup": unit_group,
@@ -14,9 +15,10 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
             "include": "hours"
         }
 
-        response: requests.Response = requests.get(WEATHER_API_URL, params=params)
-        # validation
-        response: dict = response.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(WEATHER_API_URL, params=params) as resp:
+                response = await resp.json()
+        # response: json
 
         daily_data = response['days'][0]['hours']
         hours_list = []
@@ -28,7 +30,9 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
         return hours_list
 
 
-if __name__ == "__main__":
-    # weather service
-    test_today_weather = WeatherService.request()
-    print(test_today_weather[2])
+# test
+# async def main():
+#     test_today_weather = await WeatherService.request()
+#     print(test_today_weather[2])
+#
+# asyncio.run(main())
