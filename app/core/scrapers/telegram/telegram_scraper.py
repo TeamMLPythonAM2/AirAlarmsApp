@@ -55,27 +55,28 @@ class TelegramScraper:
         dialogs: list[DialogMetadata],
         date_range: DateRange,
     ) -> None:
-        try:
-            async with client.takeout(
-                finalize=settings.CLIENT_TAKEOUT_FINALIZE,
-                contacts=settings.CLIENT_TAKEOUT_FETCH_CONTACTS,
-                users=settings.CLIENT_TAKEOUT_FETCH_USERS,
-                chats=settings.CLIENT_TAKEOUT_FETCH_GROUPS,
-                megagroups=settings.CLIENT_TAKEOUT_FETCH_MEGAGROUPS,
-                channels=settings.CLIENT_TAKEOUT_FETCH_CHANNELS,
-                files=settings.CLIENT_TAKEOUT_FETCH_FILES,
-            ) as takeout:
-                message_downloader = await create_message_downloader(takeout, date_range)
-                await message_downloader.download_dialogs(dialogs)
-        except telethon.errors.TakeoutInitDelayError as e:
-            raise UninitializedTakeoutSessionException(
-                "\nWhen initiating a `takeout` session, Telegram requires a cooling period "
-                "between data exports.\n"
-                f"Initial message: {e}\n"
-                "Workaround: You can allow takeout by:\n"
-                "1. Opening Telegram service notifications (where you retrieved the login code)\n"
-                '2. Click allow on "Data export request"\n'
-            ) from e
+        async with client:
+            try:
+                async with client.takeout(
+                    finalize=settings.CLIENT_TAKEOUT_FINALIZE,
+                    contacts=settings.CLIENT_TAKEOUT_FETCH_CONTACTS,
+                    users=settings.CLIENT_TAKEOUT_FETCH_USERS,
+                    chats=settings.CLIENT_TAKEOUT_FETCH_GROUPS,
+                    megagroups=settings.CLIENT_TAKEOUT_FETCH_MEGAGROUPS,
+                    channels=settings.CLIENT_TAKEOUT_FETCH_CHANNELS,
+                    files=settings.CLIENT_TAKEOUT_FETCH_FILES,
+                ) as takeout:
+                    message_downloader = await create_message_downloader(takeout, date_range)
+                    await message_downloader.download_dialogs(dialogs)
+            except telethon.errors.TakeoutInitDelayError as e:
+                raise UninitializedTakeoutSessionException(
+                    "\nWhen initiating a `takeout` session, Telegram requires a cooling period "
+                    "between data exports.\n"
+                    f"Initial message: {e}\n"
+                    "Workaround: You can allow takeout by:\n"
+                    "1. Opening Telegram service notifications (where you retrieved the login code)\n"
+                    '2. Click allow on "Data export request"\n'
+                ) from e
 
 
 if __name__ == '__main__':

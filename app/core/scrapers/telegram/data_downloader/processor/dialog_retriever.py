@@ -6,7 +6,7 @@ import telethon
 from telethon.tl import custom as tl_custom
 from telethon.tl import types as tl_types
 
-from ..dict_types.dialog import DialogMetadata, DialogType
+from ..dict_types.dialog import DialogMetadata
 
 logger = logging.getLogger(__name__)
 
@@ -40,15 +40,7 @@ class DialogRetriever:
 
         logger.info("dialog #%d: starting processing...", dialog_id)
 
-        type_to_enum = {
-            dialog.is_user: DialogType.PRIVATE,
-            dialog.is_group: DialogType.GROUP,
-            dialog.is_channel: DialogType.CHANNEL,
-        }
-        dialog_type = type_to_enum.get(True, DialogType.UNKNOWN)
-
         return DialogMetadata(
             id=dialog_id,
-            name=dialog_name,
-            type=dialog_type
+            name=dialog_name
         )
