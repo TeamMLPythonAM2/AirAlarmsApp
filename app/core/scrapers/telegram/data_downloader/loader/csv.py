@@ -1,11 +1,10 @@
-import datetime as dt
 import logging
 from pathlib import Path
 from typing import get_type_hints
-
 import pandas as pd
 
 from ..dict_types.message import MessageAttributes
+from ..dict_types.date import DateRange
 
 logger = logging.getLogger(__name__)
 
@@ -15,19 +14,20 @@ class CSVMessageWriter:
         self.output_dir = output_dir
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-    def write_messages(
+    async def write_messages(
         self, messages: list[MessageAttributes],
-        min_date: dt.datetime, max_date: dt.datetime
+        date_range: DateRange
     ) -> None:
         """
-        Write messages for a dialog to a CSV file.
+        Write messages to a CSV file.
         """
         if messages:
             df = pd.DataFrame(messages)
         else:
             columns = list(get_type_hints(MessageAttributes).keys())
             df = pd.DataFrame(columns=columns)
-        filename = f"{min_date.strftime('%Y-%m-%d_%H')}-{max_date.strftime('%Y-%m-%d_%H')}.csv"
+        filename = (f"{date_range['min_d'].strftime('%Y-%m-%d_%H')}"
+                    f"-{date_range['max_d'].strftime('%Y-%m-%d_%H')}.csv")
         write_path = self.output_dir / filename
         df.to_csv(write_path, index=False, encoding="utf-8-sig")
-        # logger.debug("saved messages for %d to %s", dialog["id"], write_path)
+        logger.debug("saved messages to %s", write_path)

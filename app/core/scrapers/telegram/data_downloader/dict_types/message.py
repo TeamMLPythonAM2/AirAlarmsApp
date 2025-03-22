@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime as dt
 from enum import Enum
 from typing import Optional, TypedDict
 
@@ -10,9 +10,8 @@ class MessageType(Enum):
     VOICE = "voice"
     PHOTO = "photo"
 
-
 class MessageAttributes(TypedDict):
     channel_id: int
     id: int
-    date: Optional[datetime]
-    message: str
+    date: Optional[dt.datetime]
+    content: str

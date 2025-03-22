@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import TypedDict, Optional
+from typing import TypedDict
 
 
 class DialogType(Enum):
@@ -7,15 +7,6 @@ class DialogType(Enum):
     GROUP = "group"
     CHANNEL = "channel"
     UNKNOWN = "unknown"
-
-
-class DialogMemberData(TypedDict):
-    user_id: int
-    first_name: Optional[str]
-    last_name: Optional[str]
-    username: str
-    phone: Optional[str]
-
 
 class DialogMetadata(TypedDict):
     id: int

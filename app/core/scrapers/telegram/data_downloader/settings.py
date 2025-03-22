@@ -13,9 +13,6 @@ CLIENT_SYSTEM_VERSION = "4.16.30-vxCUSTOM"
 # increase this number.
 CONCURRENT_DIALOG_DOWNLOADS=5
 
-# Number of reactions to download per message.
-REACTIONS_LIMIT_PER_MESSAGE=100
-
 # Reaction fetching can sometimes fail due to Telegram API limitations.
 # If download script still says about timeout, try to increase these values.
 MESSAGE_REACTION_EXPONENTIAL_BACKOFF_SLEEP_TIME=5.0
