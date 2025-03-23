@@ -1,50 +1,88 @@
 from pydantic import BaseModel
 from shared.ABRequestService import ABRequestService
 from dotenv import load_dotenv
-import requests, os, json
+import requests, os, json, aiohttp, asyncio
 
 load_dotenv()
 
 ALARMS_API_KEY = os.getenv("ALARMS_API_KEY")
-AIR_URL = 'https://api.alerts.in.ua//v1/iot/active_air_raid_alerts_by_oblast.json'
+LIST_OF_REGIONS_URL = "https://api.ukrainealarm.com/api/v3/regions"
+AIR_URL = "https://api.ukrainealarm.com/api/v3/alerts"
+# WEBHOOK_URL = "https://api.ukrainealarm.com/api/v3/webhook"
+
+EXCLUDED_REGIONS = {
+    "Тестовий регіон", "Луганська область", "Автономна Республіка Крим"
+}
 
 
-def get_obl_names():
-    with open("oblasts.json", "r", encoding="utf-8") as f:
-        return json.load(f).get("oblasts", [])
+class AirAlarmRegions(BaseModel):
+    oblast: str
+    alert: str
 
 
-class AirAlarmOblast(BaseModel):
-    oblast_statuses: list[dict[str, str]]
-
-
-class AirAlarmsService(ABRequestService[AirAlarmOblast]):
+class AirAlarmsService(ABRequestService[AirAlarmRegions]):
+    headers = {
+        "Authorization": ALARMS_API_KEY
+    }
 
     @staticmethod
-    def request() -> AirAlarmOblast:
-        params = {
-            "token": ALARMS_API_KEY,
-        }
+    async def get_all_regions():
+        """
+        return a list of all oblasts and cities stored as states
+        """
+        async with aiohttp.ClientSession() as session:
+            async with session.get(LIST_OF_REGIONS_URL, headers=AirAlarmsService.headers) as response:
+                if response.status == 200:
+                    data = await response.json()
+                else:
+                    print(f"Error: {response.status} - {response.reason}")
 
-        oblasts = get_obl_names()
+        oblasts = []
+        for info in data["states"]:
+            region_type = info["regionType"]
+            region_name = info["regionName"]
+            if region_type == "State" and region_name not in EXCLUDED_REGIONS:
+                oblasts.append(region_name)
+        return oblasts
 
-        response = requests.get(AIR_URL, params=params)
-        data = response.json()
-        print(data)
+    @staticmethod
+    async def request_current(all_oblasts: bool = False):
+        """
+        return either the regions with active alerts or all regions
+        """
+        async with aiohttp.ClientSession() as session:
+            async with session.get(AIR_URL, headers=AirAlarmsService.headers) as response:
+                if response.status == 200:
+                    data = await response.json()
+                else:
+                    print(f"Error: {response.status} - {response.reason}")
 
-        statuses = {
-            "A": "active",
-            "N": "no_alert",
-            "P": "partial"
-        }
+        # print(data)
 
-        oblast_statuses = [
-            {"location_title": oblasts[i], "status": statuses.get(data[i])}
-            for i in range(len(data))
-        ]
+        oblast_statuses = []
+        for info in data:
+            region_type = info["regionType"]
+            region_name = info["regionName"]
+            active_alerts = info.get("activeAlerts")
+
+            if region_type == "State" and region_name not in EXCLUDED_REGIONS:
+                alerts = active_alerts[0].get("type")
+                oblast_statuses.append(AirAlarmRegions(oblast=region_name, alert=alerts).model_dump())
+
+        if all_oblasts:
+            list_of_regions = await AirAlarmsService.get_all_regions()
+            # print(list_of_regions)
+            for region in list_of_regions:
+                if not any(info["oblast"] == region for info in oblast_statuses):
+                    oblast_statuses.append(AirAlarmRegions(oblast=region, alert="NO_ALERT").model_dump())
 
         print(oblast_statuses)
-        return AirAlarmOblast(**{"oblast_statuses": oblast_statuses})
+        return oblast_statuses
 
 
-AirAlarmsService.request()
+async def main():
+    # await AirAlarmsService.get_all_regions()
+    await AirAlarmsService.request_current(all_oblasts=False)
+
+
+asyncio.run(main())
