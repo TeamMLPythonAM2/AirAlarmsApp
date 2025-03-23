@@ -1,18 +1,16 @@
-from logs.logger import loggable
-from config import *
-from fastapi import FastAPI, Request
 import logging
+from config.logger import loggable
+from config import *
+from fastapi import FastAPI, Request, Response, HTTPException
 import uvicorn
 
-CONFIG = Config()
-logger = logging.getLogger(__name__)
-
+logger = logging.getLogger("main")
 app = FastAPI()
 
 
 @app.get("/")
 @loggable
-async def root(request: Request):
+async def root(request: Request, response: Response):
     return "<div>Hello</div>"
 
 if __name__ == "__main__":
