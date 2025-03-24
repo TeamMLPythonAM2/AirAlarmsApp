@@ -4,8 +4,10 @@ import json
 import os
 
 import regex as re
+from fastapi import HTTPException
 
-from app.core.scrapers.web_scraper.consts import FILES_PATH
+from app.config.configuration import Config
+from app.core.scrapers.web_scraper.isw_enum import ISWEnum
 
 
 class ISWParser:
@@ -22,17 +24,17 @@ class ISWParser:
         self.href_json_name = None
         self.href_json: dict[str, str] = {}
 
-    async def parse_href(self, file_name: str):
-        with gzip.open(filename=os.path.join(FILES_PATH, file_name)) as file:
+    async def parse_href(self, file_name: str, path: str):
+        with gzip.open(filename=os.path.join(path, file_name)) as file:
             file_str = file.read().decode()
             file.close()
             matches = re.finditer(self.HREF_PATTERN, file_str)
             self.matches_iter = matches
             self.href_json_name = file_name[:-8]
 
-    async def find_write_href(self):
-        if not self.matches_iter:
-            raise ValueError("matches is empty")
+    async def find_write_href(self, path: str):
+        if not self.matches_iter.captures():
+            raise HTTPException(500, "No matches for isw parser")
 
         for row in self.matches_iter:
             href = re.search(self.URL_DATE_PATTERN, row.captures()[0])
@@ -42,14 +44,7 @@ class ISWParser:
                     href.captures()[0][1:-2]
                 )
         with open(
-            os.path.join(FILES_PATH, self.href_json_name + ".json"), "w"
+                os.path.join(path, self.href_json_name + ".json"), "w"
         ) as json_file:
             json_file.write(json.dumps(self.href_json))
             json_file.close()
-
-
-if __name__ == "__main__":
-    par = ISWParser()
-    asyncio.run(par.parse_href("REPORTS_2023.html.gz"))
-    asyncio.run(par.find_write_href())
-    print(par.matches_iter, par.href_json)
