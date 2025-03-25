@@ -2,11 +2,11 @@ import logging
 import telethon
 from app.config import Config
 
-from . import settings
-from .dict_types.date import DateRange
-from .loader.csv import CSVMessageWriter
-from .processor.dialog_retriever import DialogRetriever
-from .processor.message_downloader import MessageDownloader
+from app.core.scrapers.telegram.data_downloader import settings
+from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
+from app.core.scrapers.telegram.data_downloader.loader.csv import CSVMessageWriter
+from app.core.scrapers.telegram.data_downloader.processor.dialog_retriever import DialogRetriever
+from app.core.scrapers.telegram.data_downloader.processor.message_downloader import MessageDownloader
 
 logger = logging.getLogger(__name__)
 

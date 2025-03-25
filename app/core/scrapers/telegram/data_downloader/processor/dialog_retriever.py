@@ -6,7 +6,7 @@ import telethon
 from telethon.tl import custom as tl_custom
 from telethon.tl import types as tl_types
 
-from ..dict_types.dialog import DialogMetadata
+from app.core.scrapers.telegram.data_downloader.dict_types.dialog import DialogMetadata
 
 logger = logging.getLogger(__name__)
 

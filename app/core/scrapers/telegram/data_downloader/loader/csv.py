@@ -3,8 +3,8 @@ from pathlib import Path
 from typing import get_type_hints
 import pandas as pd
 
-from ..dict_types.message import MessageAttributes
-from ..dict_types.date import DateRange
+from app.core.scrapers.telegram.data_downloader.dict_types.message import MessageAttributes
+from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
 
 logger = logging.getLogger(__name__)
 

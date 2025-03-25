@@ -1,15 +1,14 @@
 import datetime as dt
-import asyncio
 import telethon
 
 from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
-from data_downloader.factory import (
+from app.core.scrapers.telegram.data_downloader.factory import (
     create_dialog_retriever,
     create_telegram_client,
     create_message_downloader
 )
-from data_downloader import settings
-from data_downloader.dict_types.dialog import DialogMetadata
+from app.core.scrapers.telegram.data_downloader import settings
+from app.core.scrapers.telegram.data_downloader.dict_types.dialog import DialogMetadata
 from app.core.scrapers.telegram.exceptions import (
     UninitializedTakeoutSessionException,
     InvalidDateRangeException
@@ -77,8 +76,3 @@ class TelegramScraper:
                     "1. Opening Telegram service notifications (where you retrieved the login code)\n"
                     '2. Click allow on "Data export request"\n'
                 ) from e
-
-
-if __name__ == '__main__':
-    date = dt.datetime.now(dt.timezone.utc)
-    asyncio.run(TelegramScraper.scrape_content(date))

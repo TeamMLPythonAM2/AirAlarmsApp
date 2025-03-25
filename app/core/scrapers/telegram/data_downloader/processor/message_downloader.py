@@ -8,10 +8,10 @@ import telethon
 from telethon.tl import types as tl_types
 from telethon.tl.custom.message import Message as TLMessage
 
-from ..dict_types.date import DateRange
-from ..dict_types.dialog import DialogMetadata
-from ..dict_types.message import MessageAttributes
-from ..loader.csv import CSVMessageWriter
+from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
+from app.core.scrapers.telegram.data_downloader.dict_types.dialog import DialogMetadata
+from app.core.scrapers.telegram.data_downloader.dict_types.message import MessageAttributes
+from app.core.scrapers.telegram.data_downloader.loader.csv import CSVMessageWriter
 
 logger = logging.getLogger(__name__)
 
