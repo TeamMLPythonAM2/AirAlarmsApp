@@ -4,7 +4,6 @@ from fastapi import FastAPI, Request
 import logging
 import uvicorn
 
-CONFIG = Config()
 logger = logging.getLogger(__name__)
 
 app = FastAPI()

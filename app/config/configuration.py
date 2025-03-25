@@ -1,10 +1,22 @@
-from dotenv import load_dotenv
-from os import environ
+import os
+from pathlib import Path
+from typing import Annotated
 
-ROOT_PATH = './../.env'
-load_dotenv(ROOT_PATH)
+from dotenv import load_dotenv
+from pydantic import StringConstraints
+
+load_dotenv()
 
 
 class Config:
-    TEST_SECRET = environ.get('TEST_SECRET')
-
+    TEST_SECRET = os.environ.get("TEST_SECRET")
+    SHORT_REPORTS_PATH = os.path.join(
+        Path(__file__).resolve().parents[2], "files", "isw_reports", "short_reports"
+    )
+    FULL_REPORTS_PATH = os.path.join(
+        Path(__file__).resolve().parents[2], "files", "isw_reports", "full_reports"
+    )
+    LINKS_PATH = os.path.join(
+        Path(__file__).resolve().parents[2], "files", "isw_reports", "links"
+    )
+    URL_PATTERN = Annotated[str, StringConstraints(pattern=r"https?://[-.a-zA-Z]{1,}")]
