@@ -5,3 +5,5 @@ aiohttp
 uvicorn
 dotenv
 pydantic
+Telethon
+pandas

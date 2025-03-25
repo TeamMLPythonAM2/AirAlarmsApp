@@ -9,6 +9,9 @@ load_dotenv()
 
 
 class Config:
+    API_ID: int = environ.get('API_ID')
+    API_HASH: str = environ.get('API_HASH')
+    API_PHONE: str = environ.get('API_PHONE')
     WEATHER_API_KEY = environ.get('WEATHER_API_KEY')
     WEATHER_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
     SHORT_REPORTS_PATH = os.path.join(
