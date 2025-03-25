@@ -1,5 +1,7 @@
 fastapi
+dotenv
+regex
+aiohttp
 uvicorn
 dotenv
 pydantic
-requests
