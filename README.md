@@ -4,4 +4,5 @@
 
 - Create **.venv** **python3 -m venv <path>** or **python -m venv <path>**
 - install required packages `pip install -r requirements.txt`
-## To start use `uwsgi --ini uwsgi.ini`
+### System diagram 
+<img src="./diagram.jpeg" width="400"/>
