@@ -9,7 +9,8 @@ load_dotenv()
 
 
 class Config:
-    TEST_SECRET = os.environ.get("TEST_SECRET")
+    WEATHER_API_KEY = environ.get('WEATHER_API_KEY')
+    WEATHER_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
     SHORT_REPORTS_PATH = os.path.join(
         Path(__file__).resolve().parents[2], "files", "isw_reports", "short_reports"
     )

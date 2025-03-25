@@ -1,8 +1,7 @@
-from logs.logger import loggable
-from config import *
-from fastapi import FastAPI, Request
 import logging
+from fastapi import FastAPI, Request
 import uvicorn
+from logs.logger import loggable
 
 logger = logging.getLogger(__name__)
 
