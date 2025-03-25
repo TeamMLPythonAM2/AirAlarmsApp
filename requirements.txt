@@ -1,8 +1,7 @@
 fastapi
-uwsgi
 dotenv
-beautifulsoup4
-requests
 regex
-pydantic
 aiohttp
+uvicorn
+dotenv
+pydantic
