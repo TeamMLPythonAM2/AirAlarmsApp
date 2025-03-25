@@ -1,18 +1,13 @@
 from pydantic import BaseModel
 from shared.ABRequestService import ABRequestService
-from dotenv import load_dotenv
-import requests, os, json, aiohttp, asyncio
+import aiohttp, asyncio
+from app.config.configuration import Config
 
-load_dotenv()
+ALARMS_API_KEY = Config.ALARMS_API_KEY
+LIST_OF_REGIONS_URL = Config.LIST_OF_REGIONS_URL
+AIR_URL = Config.AIR_URL
 
-ALARMS_API_KEY = os.getenv("ALARMS_API_KEY")
-LIST_OF_REGIONS_URL = "https://api.ukrainealarm.com/api/v3/regions"
-AIR_URL = "https://api.ukrainealarm.com/api/v3/alerts"
-# WEBHOOK_URL = "https://api.ukrainealarm.com/api/v3/webhook"
-
-EXCLUDED_REGIONS = {
-    "Тестовий регіон", "Луганська область", "Автономна Республіка Крим"
-}
+EXCLUDED_REGIONS = Config.EXCLUDED_REGIONS
 
 
 class AirAlarmRegions(BaseModel):
@@ -81,7 +76,6 @@ class AirAlarmsService(ABRequestService[AirAlarmRegions]):
 
 
 async def main():
-    # await AirAlarmsService.get_all_regions()
     await AirAlarmsService.request_current(all_oblasts=False)
 
 
