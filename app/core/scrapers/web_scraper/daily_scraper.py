@@ -3,9 +3,9 @@ import json
 import os.path
 from datetime import datetime
 
-from app.core.scrapers.web_scraper.isw_enum import ISWEnum
-from app.core.scrapers.web_scraper.isw_scraper import ISWScraper
-from app.core.scrapers.web_scraper.web_parser.isw_parser import ISWParser
+from isw_enum import ISWEnum
+from isw_scraper import ISWScraper
+from web_parser.isw_parser import ISWParser
 
 from app.config.configuration import Config
 
