@@ -10,7 +10,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(os.path.join(PATH, 'logs', '{:%Y_%m_%d}.log'.format(dt.datetime.now())))
+        logging.FileHandler(os.path.join(PATH, '{:%Y_%m_%d}.log'.format(dt.datetime.now())))
     ]
 )
 
