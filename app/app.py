@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from logs.logger import loggable
 
 logger = logging.getLogger(__name__)
@@ -9,5 +9,5 @@ app = FastAPI()
 
 @app.get("/")
 @loggable
-async def root(request: Request):
+async def root(request: Request, response: Response):
     return {"content": {"Hello": "World"}, "status_code": 200}
