@@ -1,6 +1,6 @@
 import logging
 from fastapi import FastAPI, Request
-from config.logger import loggable
+from logs.logger import loggable
 
 logger = logging.getLogger(__name__)
 

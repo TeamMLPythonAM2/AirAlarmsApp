@@ -1,15 +1,16 @@
 import logging
 from functools import wraps
+import os
 
 from fastapi import Request, Response, status, HTTPException
 import datetime as dt
 
-
+PATH: str = os.path.dirname(os.path.realpath(__file__))
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('logs/{:%Y_%m_%d}.log'.format(dt.datetime.now()))
+        logging.FileHandler(os.path.join(PATH, 'logs', '{:%Y_%m_%d}.log'.format(dt.datetime.now())))
     ]
 )
 
