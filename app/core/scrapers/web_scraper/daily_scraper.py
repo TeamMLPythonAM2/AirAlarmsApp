@@ -45,3 +45,6 @@ def update_isw_reports():
             path=os.path.join(Config.FULL_REPORTS_PATH, "2025"),
         )
     )
+
+if __name__ == "__main__":
+    update_isw_reports()
