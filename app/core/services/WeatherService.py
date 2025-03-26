@@ -1,6 +1,6 @@
 from app.core.consts import WEATHER_API_KEY, WEATHER_API_URL
 from app.core.entities.WeatherDTO import WeatherDTO
-from shared.ABRequestService import ABRequestService
+from app.core.services.shared.ABRequestService import ABRequestService
 import aiohttp
 import asyncio
 

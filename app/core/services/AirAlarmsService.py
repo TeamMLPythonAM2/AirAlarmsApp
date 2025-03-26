@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from shared.ABRequestService import ABRequestService
+from app.core.services.shared.ABRequestService import ABRequestService
 import aiohttp, asyncio
 from app.config.configuration import Config
 
