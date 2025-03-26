@@ -21,10 +21,11 @@ def update_isw_reports():
 
     file_name = ISWEnum.REPORTS_2025.name
 
-    with open(os.path.join(Config.LINKS_PATH, file_name + ".json"), "r") as json_file:
-        data: dict[str, str] = json.load(json_file)
-        last_link = data[(last_date := list(data)[0])]
-        json_file.close()
+    if os.path.exists((path := os.path.join(Config.LINKS_PATH, file_name + ".json"))):
+        with open(path, "r") as json_file:
+            data: dict[str, str] = json.load(json_file)
+            last_link = data[(last_date := list(data)[0])]
+            json_file.close()
 
     asyncio.run(
         ISWScraper.get_page_content(
