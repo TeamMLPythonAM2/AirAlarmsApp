@@ -20,6 +20,7 @@ def update_isw_reports():
             return
 
     file_name = ISWEnum.REPORTS_2025.name
+    last_link, last_date = None, None
 
     if os.path.exists((path := os.path.join(Config.LINKS_PATH, file_name + ".json"))):
         with open(path, "r") as json_file:
