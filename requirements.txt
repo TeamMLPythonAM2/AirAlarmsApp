@@ -1,5 +1,9 @@
 fastapi
+dotenv
+regex
+aiohttp
 uvicorn
 dotenv
 pydantic
-aiohttp
+Telethon
+pandas
