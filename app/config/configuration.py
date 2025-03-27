@@ -20,18 +20,22 @@ class Config:
     # weather api
     WEATHER_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
     WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
+
+    FILES_PATH = os.path.join(Path(__file__).resolve().parents[2], "files")
+
     # ISW parser
     SHORT_REPORTS_PATH = os.path.join(
-        Path(__file__).resolve().parents[2], "files", "isw_reports", "short_reports"
+        FILES_PATH, "isw_reports", "short_reports"
     )
     FULL_REPORTS_PATH = os.path.join(
-        Path(__file__).resolve().parents[2], "files", "isw_reports", "full_reports"
+        FILES_PATH, "isw_reports", "full_reports"
     )
     LINKS_PATH = os.path.join(
-        Path(__file__).resolve().parents[2], "files", "isw_reports", "links"
+        FILES_PATH, "isw_reports", "links"
     )
     URL_PATTERN = Annotated[str, StringConstraints(pattern=r"https?://[-.a-zA-Z]{1,}")]
     # telegram parser
-    API_ID: int = os.environ.get('API_ID')
-    API_HASH: str = os.environ.get('API_HASH')
-    API_PHONE: str = os.environ.get('API_PHONE')
+    TELEGRAM_MESSAGES_PATH = os.path.join(FILES_PATH, 'telegram_messages')
+    TELEGRAM_API_ID: int = os.environ.get('TELEGRAM_API_ID')
+    TELEGRAM_API_HASH: str = os.environ.get('TELEGRAM_API_HASH')
+    TELEGRAM_API_PHONE: str = os.environ.get('TELEGRAM_API_PHONE')

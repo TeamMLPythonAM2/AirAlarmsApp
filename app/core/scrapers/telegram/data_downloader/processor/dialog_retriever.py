@@ -1,5 +1,5 @@
 import asyncio
-import logging
+from app.logs.logger import logger
 from app.core.scrapers.telegram import consts
 
 import telethon
@@ -7,8 +7,6 @@ from telethon.tl import custom as tl_custom
 from telethon.tl import types as tl_types
 
 from app.core.scrapers.telegram.data_downloader.dict_types.dialog import DialogMetadata
-
-logger = logging.getLogger(__name__)
 
 
 class DialogRetriever:

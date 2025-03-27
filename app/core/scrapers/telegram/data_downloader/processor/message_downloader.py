@@ -1,7 +1,7 @@
 import asyncio
-import logging
 import typing
 from itertools import chain
+from app.logs.logger import logger
 from app.core.scrapers.telegram import consts
 
 import telethon
@@ -12,8 +12,6 @@ from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
 from app.core.scrapers.telegram.data_downloader.dict_types.dialog import DialogMetadata
 from app.core.scrapers.telegram.data_downloader.dict_types.message import MessageAttributes
 from app.core.scrapers.telegram.data_downloader.loader.csv import CSVMessageWriter
-
-logger = logging.getLogger(__name__)
 
 
 class MessageDownloader:

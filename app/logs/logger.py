@@ -6,13 +6,16 @@ from fastapi import Request, Response, status, HTTPException
 import datetime as dt
 
 PATH: str = os.path.dirname(os.path.realpath(__file__))
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(os.path.join(PATH, '{:%Y_%m_%d}.log'.format(dt.datetime.now())))
-    ]
-)
+logger = logging.getLogger("logger")
+if not logger.hasHandlers():
+    logger.setLevel(logging.INFO)
+    log_format = '[%(asctime)s] [%(levelname)s] [%(module)s.%(funcName)s] - %(message)s'
+    formatter = logging.Formatter(log_format)
+
+    file_handler = logging.FileHandler(os.path.join(PATH, '{:%Y_%m_%d}.log'.format(dt.datetime.now())))
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
 
 
 def log_date():
@@ -37,6 +40,6 @@ def loggable(endpoint):
             response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
             result = str(e)
         finally:
-            logging.info(f'{log_base(request, response)} >> {result}')
+            logger.info(f'{log_base(request, response)} >> {result}')
             return result
     return wrapper

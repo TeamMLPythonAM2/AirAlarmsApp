@@ -1,7 +1,5 @@
 from pathlib import Path
-
-
-BASE_PATH = Path(__file__).resolve().parent
+from app.config.configuration import Config
 
 # Telegram API Settings
 
@@ -19,7 +17,7 @@ MESSAGE_REACTION_EXPONENTIAL_BACKOFF_SLEEP_TIME=5.0
 MESSAGE_REACTION_EXPONENTIAL_BACKOFF_MAX_TRIES=5
 
 # File export paths
-DATA_FOLDER = Path("./data" or BASE_PATH / "data").resolve()
+DATA_FOLDER = Path(Config.TELEGRAM_MESSAGES_PATH).resolve()
 
 # https://core.telegram.org/api/takeout
 # Options for the takeout method.
@@ -37,38 +35,3 @@ CLIENT_TAKEOUT_FETCH_MEGAGROUPS: bool = True
 CLIENT_TAKEOUT_FETCH_CHANNELS: bool = True
 
 CLIENT_TAKEOUT_FETCH_FILES: bool = False
-
-#
-# # General running settings
-#
-# # Set to "DEBUG" in config file for detailed info on per-chat download progress.
-# LOG_LEVEL = "INFO"
-#
-# # Message formatting for logging. Do not change unless you know what you are doing.
-# LOGGING = {
-#     "version": 1,
-#     "disable_existing_loggers": False,
-#     "handlers": {
-#         "console": {
-#             "level": LOG_LEVEL,
-#             "class": "logging.StreamHandler",
-#             "formatter": "default",
-#         },
-#     },
-#     "formatters": {
-#         "default": {
-#             "format": "[%(asctime)s] |%(levelname)7s| %(filename)s:%(funcName)s():%(lineno)d: %(message)s",
-#         },
-#     },
-#     "loggers": {
-#         "data_downloader": {
-#             "handlers": ["console"],
-#             "level": LOG_LEVEL,
-#             "propagate": False,
-#         },
-#         "asyncio": {
-#             "level": "DEBUG",
-#             "propagate": False,
-#         },
-#     },
-# }

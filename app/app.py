@@ -1,8 +1,5 @@
-import logging
 from fastapi import FastAPI, Request, Response
-from logs.logger import loggable
-
-logger = logging.getLogger(__name__)
+from logs.logger import loggable, logger
 
 app = FastAPI()
 
