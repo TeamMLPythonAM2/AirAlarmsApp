@@ -24,6 +24,11 @@ class Config:
     FILES_PATH = os.path.join(Path(__file__).resolve().parents[2], "files")
 
     # ISW parser
+    ISW_URL = "https://isw.pub/"
+
+    ISW_PARQUET_PATH = os.path.join(
+        FILES_PATH, "isw_reports", "isw_data.parquet"
+    )
     SHORT_REPORTS_PATH = os.path.join(
         FILES_PATH, "isw_reports", "short_reports"
     )
@@ -34,6 +39,8 @@ class Config:
         FILES_PATH, "isw_reports", "links"
     )
     URL_PATTERN = Annotated[str, StringConstraints(pattern=r"https?://[-.a-zA-Z]{1,}")]
+
+    DOWNLOAD_DIRECTORY_NLTK = os.path.join(Path(__file__).resolve().parents[2], ".venv", "nltk_data")
     # telegram parser
     TELEGRAM_MESSAGES_PATH = os.path.join(FILES_PATH, 'telegram_messages')
     TELEGRAM_API_ID: int = os.environ.get('TELEGRAM_API_ID')

@@ -7,3 +7,6 @@ dotenv
 pydantic
 Telethon
 pandas
+pyarrow
+nltk==3.9.1
+scikit-learn
