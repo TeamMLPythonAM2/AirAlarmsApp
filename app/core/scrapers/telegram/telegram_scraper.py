@@ -27,8 +27,8 @@ class TelegramScraper:
     @staticmethod
     def _time_range(target_date: dt.datetime, end_date: dt.datetime=None) -> DateRange:
         if end_date is None:
-            max_date = target_date.replace(minute=0, second=0, microsecond=0)
-            min_date = max_date - dt.timedelta(hours=1)
+            min_date = target_date.replace(minute=0, second=0, microsecond=0)
+            max_date = min_date + dt.timedelta(hours=1)
         else:
             max_date = end_date.replace(minute=0, second=0, microsecond=0)
             min_date = target_date.replace(minute=0, second=0, microsecond=0)
@@ -37,8 +37,8 @@ class TelegramScraper:
             raise InvalidDateRangeException("Maximum date must be later than the minimum date.")
 
         return DateRange(
-            min_d=min_date.replace(tzinfo=dt.timezone.utc),
-            max_d=max_date.replace(tzinfo=dt.timezone.utc)
+            min_d=min_date,
+            max_d=max_date
         )
 
     @staticmethod
