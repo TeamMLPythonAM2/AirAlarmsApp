@@ -7,3 +7,5 @@ dotenv
 pydantic
 Telethon
 pandas
+fastparquet
+pyarrow
