@@ -7,3 +7,4 @@ dotenv
 pydantic
 Telethon
 pandas
+scikit-learn
