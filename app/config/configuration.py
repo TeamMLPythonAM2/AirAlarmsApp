@@ -29,6 +29,12 @@ class Config:
     ISW_PARQUET_PATH = os.path.join(
         FILES_PATH, "isw_reports", "isw_data.parquet"
     )
+    ISW_CSV_PATH = os.path.join(
+        FILES_PATH, "isw_reports", "isw_data.csv"
+    )
+    ISW_PICKLE_PATH = os.path.join(
+        FILES_PATH, "isw_reports", "isw_data.pickle"
+    )
     SHORT_REPORTS_PATH = os.path.join(
         FILES_PATH, "isw_reports", "short_reports"
     )
