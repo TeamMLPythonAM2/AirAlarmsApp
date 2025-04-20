@@ -1,0 +1,13 @@
+.ukraine-map{
+    transition: all .3s linear;
+    max-width: 680px;
+    width: 100%;
+}
+
+path:not(.outline){
+    fill: url(#clear);
+}
+
+path.alarm{
+    fill: url(#alarm);
+}
