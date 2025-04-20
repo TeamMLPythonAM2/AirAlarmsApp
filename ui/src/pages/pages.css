@@ -20,7 +20,8 @@
 }
 
 .content h1{
-    background: linear-gradient(180deg, #D8BFFF 0%, #EE8E9B 100%);
+    background: linear-gradient(180deg, #D8BFFF 50%, #EE8E9B 100%);
+    text-shadow: rgba(235, 226, 243, 0.77) 0 0 9px;
     font-family: "Aldrich", sans-serif;
     font-weight: 400;
     font-size: 4rem;
@@ -28,7 +29,6 @@
     line-height: 100%;
     cursor: default;
     text-align: center;
-    filter: drop-shadow(0 0 1em #646cffaa);
     user-select: none;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
