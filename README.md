@@ -7,7 +7,7 @@
 - Create venv `python -m venv <path>` or `.venv python3 -m venv <path>`
 - Activate venv `. .venv/bin/activate`
 - install required packages `pip install -r requirements.txt`
-- create .evn file inside AirAlarmsApp directory with such keys (telegram keys are optional):
+- create .env file inside AirAlarmsApp directory with such keys (telegram keys are optional):
   - TELEGRAM_API_ID
   - TELEGRAM_API_HASH
   - TELEGRAM_API_PHONE
