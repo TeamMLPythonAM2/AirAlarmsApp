@@ -1,6 +1,7 @@
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 import asyncio
 from app.core.services.AirAlarmsService import AirAlarmsService
+from app.city_convertion_dict import city_dict
 
 router = APIRouter()
 
@@ -12,7 +13,8 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             alert_info = await AirAlarmsService.request_current(all_oblasts=True)
-            await websocket.send_json(alert_info)
+            clean_data = list(map(lambda x: {**x, "oblast": city_dict.get(x["oblast"])}, alert_info))
+            await websocket.send_json(clean_data)
             await asyncio.sleep(30)
     except WebSocketDisconnect:
         print("Disconnected")
