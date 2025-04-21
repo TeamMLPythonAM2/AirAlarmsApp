@@ -14,7 +14,8 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             alert_info = await AirAlarmsService.request_current(all_oblasts=True)
             clean_data = list(map(lambda x: {**x, "oblast": city_dict.get(x["oblast"])}, alert_info))
-            await websocket.send_json(clean_data)
+            the_cleanest_list_ever = [x["oblast"] for x in clean_data if x.get("alert") == "AIR"]
+            await websocket.send_json(the_cleanest_list_ever)
             await asyncio.sleep(30)
     except WebSocketDisconnect:
         print("Disconnected")
