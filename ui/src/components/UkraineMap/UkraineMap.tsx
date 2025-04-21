@@ -1,11 +1,12 @@
 import './UkraineMap.css'
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import {REGIONS} from "./RegionsAPI.ts";
+import onAlarmMapSocket from "../../hooks/onAlarmMapSocket.ts";
 
 
 
 const UkraineMap = () => {
-    const [alarmRegions, setAlarms] = useState(["crimea", "luhanska"] as string[]);
+    const [alarmRegions] = onAlarmMapSocket();
 
     useLayoutEffect(() => {
         for (let region of REGIONS) {
