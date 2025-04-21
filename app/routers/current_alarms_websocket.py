@@ -19,4 +19,4 @@ async def websocket_endpoint(websocket: WebSocket):
             await asyncio.sleep(30)
     except WebSocketDisconnect:
         print("Disconnected")
-# returns json with city - no alert or alert every 30 sec
+# returns list with oblasts with alarms
