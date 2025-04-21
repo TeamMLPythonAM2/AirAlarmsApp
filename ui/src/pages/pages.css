@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: calc(100vh - 106px);
     height: 100%;
 }
@@ -20,8 +20,8 @@
 }
 
 .content h1{
-    background: linear-gradient(180deg, #D8BFFF 50%, #EE8E9B 100%);
-    text-shadow: rgba(235, 226, 243, 0.77) 0 0 9px;
+    background: linear-gradient(180deg, #D8BFFF 20%, #EE8E9B 70%);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0), 0 0 10px rgba(204, 204, 204, 0.54);
     font-family: "Aldrich", sans-serif;
     font-weight: 400;
     font-size: 4rem;
@@ -64,7 +64,7 @@
         height: 100%;
         img{
             width: 100%;
-            max-height: 500px;
+            max-height: 600px;
               animation: fluidMotion 3s infinite ease-in-out;
         }
     }

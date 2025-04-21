@@ -1,6 +1,7 @@
 .ukraine-map{
+    margin-top: -35px;
     transition: all .3s linear;
-    max-width: 680px;
+    max-width: 950px;
     position: relative;
     width: 100%;
 }
@@ -10,13 +11,12 @@ path:not(.outline){
     transform-origin: center;
     transform-box: fill-box;
     transition: all .3s linear;
-    stroke: rgba(246, 218, 218, 0.82);
+    stroke: rgba(250, 249, 255, 0.92);
     stroke-width: 5px;
     opacity: .85;
 }
 
 path:not(.outline):hover{
-    opacity: 1;
     stroke: #fff
 }
 
