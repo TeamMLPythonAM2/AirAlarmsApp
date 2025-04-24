@@ -2,10 +2,16 @@ fastapi
 dotenv
 regex
 aiohttp
-uvicorn
+uvicorn[standart]
 dotenv
 pydantic
 Telethon
 pandas
 fastparquet
 pyarrow
+scikit-learn
+pytz
+sklearn
+nltk
+stanza
+tqdm
