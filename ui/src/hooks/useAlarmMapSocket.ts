@@ -1,19 +1,20 @@
 import {useEffect, useState} from "react";
 
-const socket = new WebSocket('ws://127.0.0.1:8000/ws/current_alerts');
 
 export const ALARMS_KEY = "ALARMS_REGIONS"
-const SPECIAL_REGIONS = ["crimea", "luhanska"];
+export const SPECIAL_REGIONS = ["crimea", "luhanska"];
 
-const onAlarmMapSocket = () => {
+const useAlarmMapSocket = () => {
     const [
         alarmRegions,
         setAlarmRegions
     ] = useState<string[]>([]);
 
+    const socket = new WebSocket('ws://127.0.0.1:8000/ws/current_alerts');
+
     useEffect(() => {
         fetchStorage(setAlarmRegions)
-        setUpSocketEvents(setAlarmRegions)
+        setUpSocketEvents(socket, setAlarmRegions)
     }, []);
 
 
@@ -27,7 +28,7 @@ function fetchStorage(setAlarmRegions: (regions: string[]) => void) {
     setAlarmRegions(regions);
 }
 
-function setUpSocketEvents(setAlarmRegions: (regions: string[]) => void){
+function setUpSocketEvents(socket: WebSocket, setAlarmRegions: (regions: string[]) => void){
     socket.onmessage = (event) => {
         console.log("received")
         const eventData = JSON.parse(event.data);
@@ -39,13 +40,16 @@ function setUpSocketEvents(setAlarmRegions: (regions: string[]) => void){
 
     socket.onerror = () => {
         localStorage.clear()
-        console.log("onAlarmMapSocket error")
+        socket.close()
+        setAlarmRegions(SPECIAL_REGIONS);
+        console.log("useAlarmMapSocket error")
     }
 
     socket.onclose = () => {
         localStorage.clear()
-        console.log("onAlarmMapSocket closed")
+        setAlarmRegions(SPECIAL_REGIONS);
+        console.log("useAlarmMapSocket closed")
     }
 }
 
-export default onAlarmMapSocket
+export default useAlarmMapSocket

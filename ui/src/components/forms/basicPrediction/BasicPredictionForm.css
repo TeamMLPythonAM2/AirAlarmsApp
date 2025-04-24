@@ -1,0 +1,32 @@
+.prediction-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 25px 30px 25px;
+    label{
+        display: block;
+        background: linear-gradient(180deg, #D8BFFF 20%, #EE8E9B 70%);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0), 0 0 10px rgba(204, 204, 204, 0.54);
+        font-family: "Aldrich", sans-serif;
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 100%;
+        cursor: default;
+        user-select: none;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    button {
+        background: #4F3265;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        max-width: 70px;
+    }
+    @media screen and (max-width: 740px){
+
+        /*flex-direction: column-reverse;*/
+    }
+}
+
+

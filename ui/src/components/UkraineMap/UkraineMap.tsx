@@ -1,12 +1,12 @@
 import './UkraineMap.css'
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import {REGIONS} from "./RegionsAPI.ts";
-import onAlarmMapSocket from "../../hooks/onAlarmMapSocket.ts";
+import useAlarmMapSocket from "../../hooks/useAlarmMapSocket.ts";
 
 
 
 const UkraineMap = () => {
-    const [alarmRegions] = onAlarmMapSocket();
+    const [alarmRegions] = useAlarmMapSocket();
 
     useLayoutEffect(() => {
         for (let region of REGIONS) {
@@ -127,6 +127,11 @@ const UkraineMap = () => {
                 <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
                 <feBlend mode="normal" in2="shape" result="effect3_innerShadow_13_202"/>
             </filter>
+            <linearGradient id="special" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#B31518" stopOpacity="1"/>
+                <stop offset="100%" stopColor="#800404" stopOpacity="1"/>
+            </linearGradient>
+
             <linearGradient id="clear" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#3F006E" stopOpacity="1"/>
                 <stop offset="100%" stopColor="#6744A5" stopOpacity="1"/>

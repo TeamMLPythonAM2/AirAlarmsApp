@@ -69,15 +69,13 @@
         }
     }
     @media screen and (max-width: 740px) {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column-reverse;
         h1{
             text-align: center;
         }
         .predictions-table{
-            flex-direction: column-reverse;
-        }
-        :last-child{
-            order: -1;
+            flex-direction: column;
         }
     }
 }

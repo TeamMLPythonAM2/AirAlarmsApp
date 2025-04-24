@@ -1,5 +1,5 @@
 import Accordion from "../shared/Accordion/Accordion.tsx";
-import {PredictionOptionForm} from "../forms/BasicPredictionForm.tsx";
+import {PredictionOptionForm} from "../forms/basicPrediction/BasicPredictionForm.tsx";
 
 export interface PredictionOption {
     label: string;

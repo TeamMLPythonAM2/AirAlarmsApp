@@ -1,5 +1,5 @@
 import PredictionOptionItem, {PredictionOption} from "../components/PredictionItem/PredictionOption.tsx";
-import BasicPredictionForm from "../components/forms/BasicPredictionForm.tsx";
+import BasicPredictionForm from "../components/forms/basicPrediction/BasicPredictionForm.tsx";
 import React from "react";
 import './pages.css'
 

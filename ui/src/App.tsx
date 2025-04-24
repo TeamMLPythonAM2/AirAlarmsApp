@@ -12,9 +12,11 @@ function App() {
             <Header/>
             <div className="content">
                 <Routes>
-                    {ROUTES.map((route: RouteType) => (
-                        <Route Component={route.component} path={route.path}/>
-                    ))}
+                    {
+                        ROUTES.map((route: RouteType) => (
+                            <Route Component={route.component} path={route.path}/>
+                        ))
+                    }
                     <Route path="*" Component={() => <Navigate to='/'/>}/>
                 </Routes>
             </div>
