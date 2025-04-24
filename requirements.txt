@@ -2,8 +2,9 @@ fastapi
 dotenv
 regex
 aiohttp
-uvicorn
+uvicorn[standart]
 dotenv
 pydantic
 Telethon
 pandas
+pytz
