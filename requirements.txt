@@ -8,3 +8,7 @@ pydantic
 Telethon
 pandas
 pytz
+sklearn
+nltk
+stanza
+tqdm

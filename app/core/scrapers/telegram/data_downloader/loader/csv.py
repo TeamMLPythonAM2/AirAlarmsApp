@@ -5,7 +5,6 @@ import pandas as pd
 
 from app.logs.logger import logger
 from app.core.scrapers.telegram.data_downloader.dict_types.message import MessageAttributes
-from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
 
 
 class CSVMessageWriter:

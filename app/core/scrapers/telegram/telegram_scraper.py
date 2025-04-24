@@ -70,7 +70,7 @@ class TelegramScraper:
             except telethon.errors.TakeoutInitDelayError as e:
                 raise UninitializedTakeoutSessionException(
                     "\nWhen initiating a `takeout` session, Telegram requires a cooling period "
-                    "between data exports.\n"
+                    "between datasets exports.\n"
                     f"Initial message: {e}\n"
                     "Workaround: You can allow takeout by:\n"
                     "1. Opening Telegram service notifications (where you retrieved the login code)\n"
