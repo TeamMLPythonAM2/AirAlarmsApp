@@ -1,6 +1,7 @@
 .prediction-form{
     display: flex;
     flex-direction: column;
+    font-family: "Josefin Sans", sans-serif;
     gap: 10px;
     padding: 15px 25px 30px 25px;
     label{
@@ -17,11 +18,18 @@
         -webkit-text-fill-color: transparent;
     }
     button {
+        font-family: "Aldrich", sans-serif;
+        line-height: 10px;
         background: #4F3265;
-        padding: 10px;
-        border-radius: 5px;
+        padding: 15px 15px;
+        border-radius: 8px;
+        font-size: 25px;
         border: none;
-        max-width: 70px;
+        cursor: pointer;
+        max-width: min-content;
+    }
+    button:hover{
+        opacity: 0.8;
     }
     @media screen and (max-width: 740px){
 

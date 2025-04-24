@@ -61,7 +61,9 @@ const selectStyle: any = {
     minHeight: 38,
     height: 'auto',
     outline: "none",
+    fontSize: "20px",
     boxShadow: 'none',
+    borderRadius: '10px',
     padding: '0',
     border: 'none',
     cursor: 'pointer',
@@ -90,7 +92,7 @@ const selectStyle: any = {
     margin: 0,
     padding: 0,
     color: '#fff3f3',
-    caretColor: '#fff3f3',
+    caretColor: '#fff3f3'
   }),
   option: (base: CSSObjectWithLabel, state: any) => ({
     ...base,

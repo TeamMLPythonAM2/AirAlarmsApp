@@ -18,6 +18,7 @@ const PredictionOptions = () => {
         </div>
         <div className="prediction-result">
             <img src="/animated_sphere.svg" alt="Prediction result"/>
+            <img className="holder" src="/holder.svg" alt="holder"/>
         </div>
     </div>
 }

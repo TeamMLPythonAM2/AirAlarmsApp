@@ -58,14 +58,27 @@
 
     .prediction-result{
         display: flex;
+        position: relative;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        /*overflow-y: clip;*/
         height: 100%;
-        img{
+        img:not(.holder){
+            position: relative;
             width: 100%;
-            max-height: 600px;
-              animation: fluidMotion 3s infinite ease-in-out;
+            /*max-height: 500px;*/
+            animation: fluidMotion 3s infinite ease-in-out;
+            margin-bottom: 15px;
+        }
+
+        img.holder{
+            position: absolute;
+            left: 50%;
+            max-height: 27%;
+            transform: translateX(-49%);
+            animation: 1s slide ease-in-out forwards,
+                levitate 1s 1s ease-in-out infinite alternate-reverse;
         }
     }
     @media screen and (max-width: 740px) {
@@ -77,22 +90,48 @@
         .predictions-table{
             flex-direction: column;
         }
+        .prediction-result{
+            img:not(.holder){
+                max-height: 450px;
+            }
+            img.holder{
+                display: none;
+            }
+        }
     }
 }
 
 @keyframes fluidMotion {
-  0% {
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    filter: hue-rotate(0deg);
-  }
-  50% {
-    transform: perspective(1000px) rotateX(3deg) rotateY(3deg);
-    filter: hue-rotate(10deg);
-  }
-  100% {
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    filter: hue-rotate(0deg);
-  }
+    0% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        transform: perspective(1000px) rotateX(3deg) rotateY(3deg);
+        filter: hue-rotate(10deg);
+    }
+    100% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+        filter: hue-rotate(0deg);
+    }
 }
+    @keyframes slide {
+        0%{
+            bottom: -25%;
+        }
+        100%{
+            bottom: -0.5%;
+        }
+    }
+
+    @keyframes levitate {
+        0%{
+            bottom: -1.5%;
+        }
+        100%{
+            bottom: -0.5%;
+        }
+    }
+
 
 
