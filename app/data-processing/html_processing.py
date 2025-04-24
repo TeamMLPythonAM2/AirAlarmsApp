@@ -1,7 +1,7 @@
 from pathlib import Path
 import os, pandas as pd
 from app.config.configuration import Config
-from app.config.utils import read_gzip_file
+from app.core.utils.html_processing import read_gzip_file
 from app.core.entities.isw_report import ISWReport
 
 def load_html_files_to_parquet(year: str):
