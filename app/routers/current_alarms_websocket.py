@@ -3,10 +3,10 @@ import asyncio
 from app.core.services.AirAlarmsService import AirAlarmsService
 from app.city_convertion_dict import city_dict
 
-router = APIRouter()
+router_ws = APIRouter()
 
 
-@router.websocket('/ws/current_alerts')
+@router_ws.websocket('/ws/current_alerts')
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     print("Connected")
