@@ -7,6 +7,7 @@ dotenv
 pydantic
 Telethon
 pandas
+fastparquet
 pyarrow
 scikit-learn
 pytz
