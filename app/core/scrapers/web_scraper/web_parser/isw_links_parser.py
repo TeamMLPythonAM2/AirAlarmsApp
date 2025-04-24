@@ -6,7 +6,7 @@ import regex as re
 from fastapi import HTTPException
 
 
-class ISWParser:
+class ISWLinksParser:
     HREF_PATTERN = re.compile(
         r"<a href=\"https?://.{1,30}\".{1,}((Click here to read|Ukraine Invasion Update)"
         r"(.{1,}\n){1,2}.{1,50}<strong>[A-Za-z]{1,10} \d{1,2}|"
