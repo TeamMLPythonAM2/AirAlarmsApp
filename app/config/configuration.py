@@ -13,6 +13,7 @@ class Config:
     # air alarms api
     # WEBHOOK_URL = "https://api.ukrainealarm.com/api/v3/webhook"
     ALARMS_API_KEY = os.environ.get("ALARMS_API_KEY")
+    PREDICTION_KEY = os.environ.get("PREDICTION_KEY")
     LIST_OF_REGIONS_URL = "https://api.ukrainealarm.com/api/v3/regions"
     AIR_URL = "https://api.ukrainealarm.com/api/v3/alerts"
     EXCLUDED_REGIONS = {

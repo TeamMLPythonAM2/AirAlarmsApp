@@ -1,7 +1,8 @@
-from fastapi import FastAPI, APIRouter, Header
+from fastapi import APIRouter, Header
 from datetime import datetime, timedelta
 import pandas as pd
 from app.config.configuration import Config
+from app.utils.key_verification import key_check
 import os
 
 router_get = APIRouter()
@@ -25,8 +26,9 @@ def get_prediction(city, hour) -> bool:
 async def prediction(
     city: str = Header(...),
     hour: int = Header(...),
-    # key: str = Header(...)
+    key: str = Header(...)
 ):
+    key_check(key)
     return {"prediction": get_prediction(city, hour),
             "city_address": city,
             "hour_to_add": hour}
