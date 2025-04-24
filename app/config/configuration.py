@@ -4,6 +4,7 @@ from typing import Annotated
 
 from dotenv import load_dotenv
 from pydantic import StringConstraints
+import pytz
 
 load_dotenv()
 
@@ -12,6 +13,7 @@ class Config:
     # air alarms api
     # WEBHOOK_URL = "https://api.ukrainealarm.com/api/v3/webhook"
     ALARMS_API_KEY = os.environ.get("ALARMS_API_KEY")
+    PREDICTION_KEY = os.environ.get("PREDICTION_KEY")
     LIST_OF_REGIONS_URL = "https://api.ukrainealarm.com/api/v3/regions"
     AIR_URL = "https://api.ukrainealarm.com/api/v3/alerts"
     EXCLUDED_REGIONS = {
@@ -58,6 +60,7 @@ class Config:
     LINKS_PATH = os.path.join(
         FILES_PATH, "isw_reports", "links"
     )
+
     URL_PATTERN = Annotated[str, StringConstraints(pattern=r"https?://[-.a-zA-Z]{1,}")]
 
     # telegram parser
@@ -95,3 +98,5 @@ class Config:
 
     MODELS_PATH = os.path.join(FILES_PATH, 'models')
     MODEL_FOR_PREDICT_PATH = os.path.join(MODELS_PATH, '1_hist_gradient_boosting_classifier_v2.pkl')
+    
+    KYIV_TZ = pytz.timezone("Europe/Kyiv")
