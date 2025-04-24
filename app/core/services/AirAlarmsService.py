@@ -4,6 +4,7 @@ from app.core.services.shared.ABRequestService import ABRequestService
 import aiohttp
 from app.config.configuration import Config
 
+
 class AirAlarmRegions(BaseModel):
     oblast: str
     alert: str

@@ -1,6 +1,8 @@
 import asyncio
 import typing
 from itertools import chain
+import datetime as dt
+import pytz
 from app.logs.logger import logger
 from app.core.scrapers.telegram import consts
 
@@ -25,6 +27,7 @@ class MessageDownloader:
         self.message_writer = message_writer
         self._semaphore = asyncio.Semaphore(5)
         self.date_range = date_range
+        self.current_date = self.date_range["min_d"]
 
     @property
     def concurrent_dialog_downloads(self) -> int:
@@ -42,7 +45,7 @@ class MessageDownloader:
         msg_attributes: MessageAttributes = {
             "channel_id": channel_id,
             "id": message.id,
-            "date": message.date,
+            "date": message.date.astimezone(pytz.timezone("Europe/Kyiv")),
             "content": message.message or ""
         }
         return msg_attributes
@@ -54,9 +57,9 @@ class MessageDownloader:
         if isinstance(tg_entity, list):
             tg_entity = tg_entity[0]
         async for message in self.client.iter_messages(
-            tg_entity, wait_time=5, offset_date=self.date_range['max_d']
+            tg_entity, wait_time=5, offset_date=(self.current_date + dt.timedelta(hours=1)).astimezone(pytz.timezone("Europe/Kyiv"))
         ):
-            if message.date < self.date_range['min_d']:
+            if message.date < self.current_date:
                 break
             yield message
 
@@ -99,13 +102,17 @@ class MessageDownloader:
         Provided a `dialogs` list, download messages from each dialog and save them.
         """
         logger.info("downloading messages from %d dialogs...", len(dialogs))
-        tasks = []
-        for dialog in dialogs:
-            # TODO: up for debate: move semaphored download to a decorator
-            tasks.append(self._semaphored_download_dialog(dialog))
-        dialogs_messages = await asyncio.gather(*tasks)
-        messages = list(chain.from_iterable(dialogs_messages))
-        await self.message_writer.write_messages(messages, self.date_range)
 
-        logger.info("all dialogs downloaded")
+        while self.current_date < self.date_range["max_d"]:
+            tasks = []
+            for dialog in dialogs:
+                # TODO: up for debate: move semaphored download to a decorator
+                tasks.append(self._semaphored_download_dialog(dialog))
+            dialogs_messages = await asyncio.gather(*tasks)
+            messages = list(chain.from_iterable(dialogs_messages))
+            await self.message_writer.write_messages(messages, self.current_date)
+            logger.info(f"messages downloaded on date {self.current_date}")
+            self.current_date += dt.timedelta(hours=1)
+
+        logger.info("all messages downloaded")
         return

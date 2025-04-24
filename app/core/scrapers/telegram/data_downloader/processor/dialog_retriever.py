@@ -21,7 +21,7 @@ class DialogRetriever:
         tasks = []
         # * process each dialog asynchronously, therefore increasing throughput
         for dialog in dialogs:
-            if dialog.id not in consts.CHANNEL_IDS_LIST:
+            if dialog.id not in consts.CHANNEL_IDS.keys():
                 continue
             task = asyncio.create_task(self._dialog_metadata(dialog))
             tasks.append(task)
