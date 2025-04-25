@@ -17,6 +17,10 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+    /*.inputs-container{*/
+    /*    display: flex;*/
+    /*    justify-content: space-between;*/
+    /*}*/
     button {
         font-family: "Aldrich", sans-serif;
         line-height: 10px;
@@ -31,8 +35,11 @@
     button:hover{
         opacity: 0.8;
     }
-    @media screen and (max-width: 740px){
-
+    @media screen and (max-width: 1040px){
+        /*.inputs-container{*/
+        /*    gap: 15px;*/
+        /*    flex-direction: column;*/
+        /*}*/
         /*flex-direction: column-reverse;*/
     }
 }

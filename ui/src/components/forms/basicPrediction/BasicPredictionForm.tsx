@@ -16,16 +16,19 @@ const BasicPredictionForm = () => {
     return(
         <form className="prediction-form">
             <label htmlFor="basicSelect">Choose the desired region</label>
-            <Select
-                inputId="basicSelect"
-                ref={selectRef}
-                options={regionsToI18Options}
-                placeholder="Not selected"
-                menuPortalTarget={document.body}
-                styles={
-                    resolveIsTouched(isTouched, selectStyle)
-                }
-            />
+            <div className="inputs-container">
+                <Select
+                    inputId="basicSelect"
+                    ref={selectRef}
+                    options={regionsToI18Options}
+                    placeholder="Not selected"
+                    menuPortalTarget={document.body}
+                    styles={
+                        resolveIsTouched(isTouched, selectStyle)
+                    }
+                />
+                {/*<input type="number" min={1} max={24}/>*/}
+            </div>
             <button onClick={(e) =>
                 handleSubmit(e, provideSelectValue, clearSelect)}>
                 Predict
