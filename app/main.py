@@ -1,12 +1,14 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI
 # from logs.logger import loggable, logger
 from app.routers.current_alarms_websocket import router_ws
 from app.routers.current_predict_endpoint import router_get
+from app.routers.predict_for_all_hours_endpoint import router_task_7
 
 app = FastAPI()
 
 app.include_router(router_ws)
 app.include_router(router_get)
+app.include_router(router_task_7)
 
 
 # @app.get("/")
