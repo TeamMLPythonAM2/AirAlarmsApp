@@ -24,7 +24,7 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
 
         if now:
             data = []
-            now_dt = dt.datetime.now().replace(minute=0, second=0, microsecond=0)
+            now_dt = dt.datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
             end_dt = now_dt + dt.timedelta(hours=24)
 
             for day in response['days'][:2]:

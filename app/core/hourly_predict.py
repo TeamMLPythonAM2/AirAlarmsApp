@@ -2,7 +2,6 @@ import asyncio
 import os
 import pandas as pd
 import datetime as dt
-import pytz
 
 from app.core.scrapers.telegram.telegram_hourly_scraper import update_messages
 from app.core.scrapers.web_scraper.isw_scraper import ISWScraper
@@ -70,8 +69,7 @@ async def predict():
     dataset = data.drop(columns=['datetime', 'city_address'])
     predictions = make_predictions(dataset)
 
-    kyiv_tz = pytz.timezone("Europe/Kyiv")
-    date = dt.datetime.now(tz=kyiv_tz).replace(minute=0, second=0, microsecond=0)
+    date = dt.datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
 
     save_data(data, date)
     save_predictions(data, predictions, date)
