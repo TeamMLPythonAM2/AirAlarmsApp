@@ -1,0 +1,109 @@
+header {
+    display: flex;
+    width: 100%;
+    background: linear-gradient(116.05deg, #2A1E34 35.39%, #1E0820 64.16%);
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 45px 5px 15px;
+    animation: appear .5s ease-in-out forwards;
+    position: relative;
+    nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 15px;
+        a{
+            display: block;
+            width: 100%;
+            padding: 0 12px;
+        }
+    }
+}
+
+header .logo{
+    display: flex;
+    align-items: flex-end;
+    font-family: "Aldrich", sans-serif;
+    width: 6rem;
+    transition: .3s;
+    user-select: none;
+    img{
+        width: 100%;
+    }
+}
+
+header h2{
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+    background: linear-gradient(180deg, #F2D1F9 53.85%, #FD5E65 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: .5rem;
+}
+
+header nav ul{
+    display: flex;
+    margin: 0;
+    gap: 25px;
+    li {
+        font-family: "Josefin Sans", sans-serif;
+        font-weight: 300;
+        width: 100%;
+        font-style: italic;
+        font-size: 1.5rem;
+        line-height: 100%;
+        transition: .3s;
+        background: linear-gradient(180deg, #D1A1FF 0%, #8A54AB 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    li:hover, li.active{
+        background: linear-gradient(180deg, #d8b9f6 0%, #bf87df 100%);
+        font-weight: 400;
+        filter: drop-shadow(0 0 30px #646cffaa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+nav .burger-menu{
+    display: none;
+    width: 40px;
+}
+
+@media screen and (max-width: 640px){
+    nav .dropdown-content {
+      opacity: 0;
+      position: absolute;
+      background: linear-gradient(-40.05deg, #220237 15.39%, #1E0820 44.16%);
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      padding: 35px 15px 10px 15px;
+      width: 100%;
+      top: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    .dropdown-links{
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      max-width: fit-content;
+    }
+
+    nav:hover .dropdown-content, .burger-menu.toggled + .dropdown-content {
+      opacity: 1;
+    }
+
+    nav .burger-menu{
+        display: block;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    nav .burger-menu:focus{
+
+    }
+}

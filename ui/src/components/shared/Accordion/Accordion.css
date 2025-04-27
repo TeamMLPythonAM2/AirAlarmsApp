@@ -1,0 +1,36 @@
+.custom-accordion{
+    background: radial-gradient(50% 50% at 50% 50%, #3D254F 0%, #261436 99.99%);
+    border-radius: 15px;
+    h4{
+        margin: 0;
+    }
+}
+
+.custom-accordion-head{
+    display: flex;
+    position: relative;
+    padding: 15px 25px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.custom-accordion-head::after{
+    display: flex;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.custom-accordion-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: all 0.5s ease-out;
+}
+
+.inner-wrap{
+    overflow: hidden;
+    /*margin-bottom: 15px;*/
+}
+
+.custom-accordion-body.open{
+    grid-template-rows: 1fr;
+}

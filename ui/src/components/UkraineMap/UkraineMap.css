@@ -1,0 +1,29 @@
+.ukraine-map{
+    margin-top: -10px;
+    transition: all .3s linear;
+    max-width: 850px;
+    position: relative;
+    width: 100%;
+}
+
+path:not(.outline){
+    fill: url(#clear);
+    transform-origin: center;
+    transform-box: fill-box;
+    transition: all .3s linear;
+    stroke: rgba(250, 249, 255, 0.92);
+    stroke-width: 5px;
+    opacity: .85;
+}
+
+path:not(.outline):hover{
+    stroke: #fff
+}
+
+path#crimea, path#luhanska{
+    fill: url(#special);
+}
+
+path.alarm{
+    fill: url(#alarm);
+}
