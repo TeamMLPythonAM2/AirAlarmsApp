@@ -1,10 +1,10 @@
 from pathlib import Path
+import datetime as dt
 from typing import get_type_hints
 import pandas as pd
 
 from app.logs.logger import logger
 from app.core.scrapers.telegram.data_downloader.dict_types.message import MessageAttributes
-from app.core.scrapers.telegram.data_downloader.dict_types.date import DateRange
 
 
 class CSVMessageWriter:
@@ -14,7 +14,7 @@ class CSVMessageWriter:
 
     async def write_messages(
         self, messages: list[MessageAttributes],
-        date_range: DateRange
+        date: dt.datetime
     ) -> None:
         """
         Write messages to a CSV file.
@@ -24,8 +24,7 @@ class CSVMessageWriter:
         else:
             columns = list(get_type_hints(MessageAttributes).keys())
             df = pd.DataFrame(columns=columns)
-        filename = (f"{date_range['min_d'].strftime('%Y-%m-%d_%H')}"
-                    f"-{date_range['max_d'].strftime('%Y-%m-%d_%H')}.csv")
+        filename = f"{date.strftime('%Y-%m-%d_%H')}.csv"
         write_path = self.output_dir / filename
         df.to_csv(write_path, index=False, encoding="utf-8-sig")
         logger.debug("saved messages to %s", write_path)

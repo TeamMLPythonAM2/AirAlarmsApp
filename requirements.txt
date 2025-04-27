@@ -7,4 +7,11 @@ dotenv
 pydantic
 Telethon
 pandas
+fastparquet
+pyarrow
+scikit-learn
 pytz
+sklearn
+nltk
+stanza
+tqdm
