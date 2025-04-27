@@ -32,7 +32,7 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
                     full_dt = dt.datetime.strptime(
                         f"{day['datetime']} {hour['datetime']}",
                         "%Y-%m-%d %H:%M:%S"
-                    ).replace(tzinfo=Config.KYIV_TZ)
+                    ).replace(tzinfo=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
                     if now_dt <= full_dt < end_dt:
                         hour['datetime'] = full_dt
                         hour['day_temp'] = day['temp']
