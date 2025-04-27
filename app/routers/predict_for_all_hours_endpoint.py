@@ -39,9 +39,8 @@ def get_prediction_for_all_hours(region="all"):
 
     for city in cities:
         city_data = grouped.get_group(city)
-        forecast = dict(zip(city_data['time'], city_data['predict']))
+        forecast = dict(zip(city_data['time'], city_data['predict'].astype(bool)))
         result["regions_forecast"][city] = forecast
-    # city_data['predict'].astype(bool)
     return result
 
 
