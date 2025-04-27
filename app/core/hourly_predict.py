@@ -2,16 +2,15 @@ import asyncio
 import os
 import pandas as pd
 import datetime as dt
-import pytz
 
-from app.config.configuration import Config
 from app.core.scrapers.telegram.telegram_hourly_scraper import update_messages
+from app.core.scrapers.web_scraper.isw_scraper import ISWScraper
+from app.config.configuration import Config
 from app.core.services.WeatherService import WeatherService
 from app.core.services.AirAlarmsService import AirAlarmsService
 from app.core.entities.WeatherDTO import WeatherDTO
 from app.core.utils import telegram
 from app.core.utils import isw
-from app.core.utils.html_processing import load_latest_html_file
 from app.core.utils.data_processing import *
 from app.core.utils.predict import make_predictions, save_predictions
 
@@ -28,7 +27,7 @@ async def weather_dataframe() -> pd.DataFrame:
     df['day_hour'] = df['datetime'].dt.hour
     return df
 
-
+#
 async def telegram_dataframe() -> pd.DataFrame:
     date = await update_messages()
 
@@ -44,18 +43,14 @@ async def telegram_dataframe() -> pd.DataFrame:
 
 
 async def isw_dataframe() -> pd.DataFrame:
-    df = load_latest_html_file('2025')
+    today = dt.datetime.now()
+    isw_report = await ISWScraper.get_full_page_content(today)
+
+    df = pd.DataFrame([isw_report.model_dump()])
     tfidf_matrix_pca = isw.vectorize_dataframe(df)
     df['isw_vector'] = tfidf_matrix_pca.tolist()
 
-    return df.drop(columns=[
-        'short_url',
-        'full_url',
-        'text_data',
-        'html_data',
-        'text_lemm',
-        'text_stemm'
-    ])
+    return df.drop(columns=['text_lemm'])
 
 
 async def get_alarms_count():
@@ -71,12 +66,13 @@ async def predict():
 
     data = prepare_merged_dataframe(weather_df, telegram_df, isw_df, alarms_count)
     data = expand_vectors(data)
+    data = add_city_hour_score(data)
+    data = add_holiday_koef(data)
 
     dataset = data.drop(columns=['datetime', 'city_address'])
     predictions = make_predictions(dataset)
 
-    kyiv_tz = pytz.timezone("Europe/Kyiv")
-    date = dt.datetime.now(tz=kyiv_tz).replace(minute=0, second=0, microsecond=0)
+    date = dt.datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
 
     save_data(data, date)
     save_predictions(data, predictions, date)

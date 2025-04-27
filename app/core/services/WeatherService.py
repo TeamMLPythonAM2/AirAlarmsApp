@@ -15,7 +15,7 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
             "include": "hours"
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             async with session.get(Config.WEATHER_API_URL, params=params) as resp:
                 response = await resp.json()
         # response: json
@@ -24,7 +24,7 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
 
         if now:
             data = []
-            now_dt = dt.datetime.now().replace(minute=0, second=0, microsecond=0)
+            now_dt = dt.datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
             end_dt = now_dt + dt.timedelta(hours=24)
 
             for day in response['days'][:2]:
@@ -32,9 +32,10 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
                     full_dt = dt.datetime.strptime(
                         f"{day['datetime']} {hour['datetime']}",
                         "%Y-%m-%d %H:%M:%S"
-                    )
+                    ).replace(minute=0, second=0, microsecond=0, tzinfo=Config.KYIV_TZ)
+                    h_dt = full_dt.replace(tzinfo=None)
                     if now_dt <= full_dt < end_dt:
-                        hour['datetime'] = full_dt
+                        hour['datetime'] = h_dt
                         hour['day_temp'] = day['temp']
                         hour['day_humidity'] = day['humidity']
                         hour['day_dew'] = day['dew']

@@ -1,3 +1,4 @@
+import pytz
 from fastapi import APIRouter, Header
 from datetime import datetime, timedelta
 import pandas as pd
@@ -7,15 +8,21 @@ import os
 
 # Router just for task 7
 
+
+# '%Y-%m-%d_%H'
+
+current_time = datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
+current_time = current_time.strftime("%Y-%m-%d_%H")
+
 router_task_7 = APIRouter()
-file_path = os.path.join(Config.HOURLY_PREDICTIONS_PATH, "predict.parquet")
+file_path = os.path.join(Config.HOURLY_PREDICTIONS_PATH, f"{current_time}.parquet")
 
 
 def get_prediction_for_all_hours(region="all"):
     prediction_now = pd.read_parquet(file_path)
 
     result = {
-        "last_prediction_time": "ВСТАВИТИ СЮДИ НАЗВУ ФАЙЛУ!!!",
+        "last_prediction_time": f"{current_time}:00",
         "regions_forecast": {}
     }
 
@@ -34,7 +41,6 @@ def get_prediction_for_all_hours(region="all"):
         city_data = grouped.get_group(city)
         forecast = dict(zip(city_data['time'], city_data['predict'].astype(bool)))
         result["regions_forecast"][city] = forecast
-
     return result
 
 

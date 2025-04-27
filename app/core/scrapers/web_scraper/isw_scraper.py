@@ -26,19 +26,16 @@ class ISWScraper:
                 return html
 
     @classmethod
-    async def get_full_page_content(
-            cls, year: int, week: int, day: int
-    ):
-        dtt = datetime.fromisocalendar(year, week, day)
-        if cls.START > dtt: raise HTTPException(status_code=500, detail="Too early date")
+    async def get_full_page_content(cls, dtt: datetime):
+        if cls.START > dtt:
+            raise HTTPException(status_code=500, detail="Too early date")
         for endpoint in [
             dtt.strftime("UkrWar%m%d%y"),
-            dtt.strftime("RusCampaign%b%-d"),
+            f"RusCampaign{dtt.strftime('%b')}{dtt.day}",
             dtt.strftime("UkrWar%m%d%Y")
         ]:
             if data := await ISWScraper.get_page_content(Config.ISW_URL + endpoint):
                 return ISWReport(
                     date=dtt.strftime("%Y-%m-%d"),
-                    short_url=endpoint,
                     html_data=data
                 )
