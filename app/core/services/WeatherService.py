@@ -15,7 +15,7 @@ class WeatherService(ABRequestService[list[WeatherDTO]]):
             "include": "hours"
         }
 
-        async with aiohttp.ClientSession() as session:
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False)) as session:
             async with session.get(Config.WEATHER_API_URL, params=params) as resp:
                 response = await resp.json()
         # response: json
