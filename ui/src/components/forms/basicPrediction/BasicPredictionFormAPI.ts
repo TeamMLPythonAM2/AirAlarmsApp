@@ -1,5 +1,5 @@
 
-const BASE_ROUTE = 'http://localhost:3000/';
+const BASE_ROUTE = 'http://13.61.68.34:8796';
 export type BasicPredictionType = {city: string, hour: string}
 export type BasicPredictionResponseType = {
     "prediction": boolean,
@@ -23,9 +23,11 @@ const getPrediction = async (region: string, range: string) => {
 
     const response = await fetch(query_url, {
         method: "GET",
-        headers: queryData,
+        headers: {
+            ...queryData,
+            key: "j8hhZHBR5DmyaEBjMvwi6g9hVwkgSAQRiPLwr5QjGNYarRfac"
+        }
     });
-
     return await response.json();
 }
 

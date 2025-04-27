@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 
+const BASE_ROUTE = 'ws://13.61.68.34:8796';
 
 export const ALARMS_KEY = "ALARMS_REGIONS"
 export const SPECIAL_REGIONS = ["crimea", "luhanska"];
@@ -10,7 +11,7 @@ const useAlarmMapSocket = () => {
         setAlarmRegions
     ] = useState<string[]>([]);
 
-    const socket = new WebSocket('ws://127.0.0.1:8000/ws/current_alerts');
+    const socket = new WebSocket(`${BASE_ROUTE}/ws/current_alerts`);
 
     useEffect(() => {
         fetchStorage(setAlarmRegions)
@@ -38,11 +39,11 @@ function setUpSocketEvents(socket: WebSocket, setAlarmRegions: (regions: string[
         setAlarmRegions(data);
     }
 
-    socket.onerror = () => {
+    socket.onerror = (err) => {
         localStorage.clear()
         socket.close()
         setAlarmRegions(SPECIAL_REGIONS);
-        console.log("useAlarmMapSocket error")
+        console.log(err, "useAlarmMapSocket error")
     }
 
     socket.onclose = () => {

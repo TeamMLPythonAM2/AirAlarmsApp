@@ -1,9 +1,10 @@
 import PredictionOptionItem, {PredictionOptionItemProps} from "../../components/PredictionItem/PredictionOption.tsx";
-import BasicPredictionForm, {LOADING_MESSAGE} from "../../components/forms/basicPrediction/BasicPredictionForm.tsx";
+import BasicPredictionForm from "../../components/forms/basicPrediction/BasicPredictionForm.tsx";
 import React, {Dispatch, useState} from "react";
 import sphere from "./animated_sphere.svg";
 import holder from "./holder.svg";
 import '../pages.css'
+import {LOADING_MESSAGE} from "../../components/forms/const.ts";
 
 const PREDICTION_OPTIONS: PredictionOptionItemProps[] = [
     {
