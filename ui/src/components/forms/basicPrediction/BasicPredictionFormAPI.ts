@@ -26,8 +26,7 @@ const getPrediction = async (region: string, range: string) => {
         headers: queryData,
     });
 
-    const responseData = await response.json();
-    return responseData;
+    return await response.json();
 }
 
 const constructQueryData = (region: string, range: string): BasicPredictionType => {

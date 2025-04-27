@@ -6,6 +6,7 @@ import useSelectRef, {resolveIsTouched} from "../../../hooks/useSelectRef.ts";
 import {fetchData} from "./BasicPredictionFormAPI.ts";
 import {useInput} from "../../../hooks/useInput.ts";
 import {BasicPredictionFormProps} from "../const.ts";
+import dropdown from "./eye.svg"
 
 export const LOADING_MESSAGE = "Wait...";
 
@@ -35,6 +36,12 @@ const BasicPredictionForm = ({setter}: BasicPredictionFormProps) => {
                         placeholder="Not selected"
                         isSearchable={false}
                         menuPortalTarget={document.body}
+                        components={
+                            {
+                                DropdownIndicator:() => <img src={dropdown} alt={"indicator"}/>,
+                                IndicatorSeparator:() => null
+                            }
+                        }
                         styles={
                             resolveIsTouched(isTouched, selectStyle)
                         }
@@ -42,12 +49,12 @@ const BasicPredictionForm = ({setter}: BasicPredictionFormProps) => {
                 </div>
                 <div className="input-container">
                     <label htmlFor="basicSelect">
-                        <span>Chose how far prediction is</span>
+                        <span>Chose how far the prediction is</span>
                     </label>
                     <input
                            ref={inputRef}
                            type="number"
-                           value={1}
+                           defaultValue={1}
                            onInput={(e) => handleInput(e)}
                            min={1} max={24}
                     />
@@ -99,10 +106,12 @@ const handleSubmit = async (
 const handleInput= (e: React.FormEvent) => {
     const input = e.target as HTMLInputElement;
     const value = Number.parseInt(input.value);
+    console.log(!value || value <= 0)
+
     if (value > 24)
-        input.value = '24';
+        return input.value = '24';
     if (!value || value <= 0)
-        input.value = '1';
+        return input.value = '1';
 
 }
 
