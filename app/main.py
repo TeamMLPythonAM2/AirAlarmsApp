@@ -17,7 +17,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.mount("/static", StaticFiles(directory="dist", html=True), name="static")
+app.mount("/", StaticFiles(directory="dist", html=True), name="static")
 
 app.include_router(router_ws)
 app.include_router(router_get)
