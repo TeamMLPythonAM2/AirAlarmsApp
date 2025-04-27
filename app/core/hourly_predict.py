@@ -66,6 +66,8 @@ async def predict():
 
     data = prepare_merged_dataframe(weather_df, telegram_df, isw_df, alarms_count)
     data = expand_vectors(data)
+    data = add_city_hour_score(data)
+    data = add_holiday_koef(data)
 
     dataset = data.drop(columns=['datetime', 'city_address'])
     predictions = make_predictions(dataset)
