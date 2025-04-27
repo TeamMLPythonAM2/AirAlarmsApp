@@ -2,9 +2,13 @@
     display: flex;
     flex-direction: column;
     font-family: "Josefin Sans", sans-serif;
-    gap: 10px;
+    gap: 15px;
     padding: 15px 25px 30px 25px;
     label{
+        display: flex;
+        justify-content: space-between;
+    }
+    label span{
         display: block;
         background: linear-gradient(180deg, #D8BFFF 20%, #EE8E9B 70%);
         text-shadow: 0 0 10px rgba(255, 255, 255, 0), 0 0 10px rgba(204, 204, 204, 0.54);
@@ -17,10 +21,22 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-    /*.inputs-container{*/
-    /*    display: flex;*/
-    /*    justify-content: space-between;*/
-    /*}*/
+    .inputs-container{
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        :last-child{
+            input{
+                max-width: 60%;
+            }
+        }
+    }
+    .input-container{
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+    }
+
     button {
         font-family: "Aldrich", sans-serif;
         line-height: 10px;
@@ -36,10 +52,7 @@
         opacity: 0.8;
     }
     @media screen and (max-width: 1040px){
-        /*.inputs-container{*/
-        /*    gap: 15px;*/
-        /*    flex-direction: column;*/
-        /*}*/
+
         /*flex-direction: column-reverse;*/
     }
 }

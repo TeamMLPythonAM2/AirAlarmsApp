@@ -1,5 +1,5 @@
 import Home from "../../pages/Home.tsx";
-import PredictionOptions from "../../pages/PredictionOptions.tsx";
+import PredictionOptions from "../../pages/PredictionOptions/PredictionOptions.tsx";
 import Faq from "../../pages/Faq.tsx";
 import React from "react";
 

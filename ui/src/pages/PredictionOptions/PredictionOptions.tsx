@@ -1,7 +1,9 @@
-import PredictionOptionItem, {PredictionOption} from "../components/PredictionItem/PredictionOption.tsx";
-import BasicPredictionForm from "../components/forms/basicPrediction/BasicPredictionForm.tsx";
+import PredictionOptionItem, {PredictionOption} from "../../components/PredictionItem/PredictionOption.tsx";
+import BasicPredictionForm from "../../components/forms/basicPrediction/BasicPredictionForm.tsx";
 import React from "react";
-import './pages.css'
+import sphere from "./animated_sphere.svg";
+import holder from "./holder.svg";
+import '../pages.css'
 
 const PREDICTION_OPTIONS: PredictionOption[] = [
     {label: "Alarm in the following day chance", FormComponent: BasicPredictionForm},
@@ -17,8 +19,8 @@ const PredictionOptions = () => {
             </div>
         </div>
         <div className="prediction-result">
-            <img src="/animated_sphere.svg" alt="Prediction result"/>
-            <img className="holder" src="/holder.svg" alt="holder"/>
+            <img src={sphere} alt="Prediction result"/>
+            <img className="holder" src={holder} alt="holder"/>
         </div>
     </div>
 }

@@ -1,7 +1,8 @@
+import Header from "./components/Header/Header.tsx";
 import './App.css'
 import './pages/pages.css'
+import './components/Header/Header.css'
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
-import Header from "./components/Header/Header.tsx";
 import {ROUTES, RouteType} from "./components/Header/routes.ts";
 import Footer from "./components/Footer/Footer.tsx";
 

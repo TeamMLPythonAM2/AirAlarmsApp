@@ -15,19 +15,33 @@ const BasicPredictionForm = () => {
 
     return(
         <form className="prediction-form">
-            <label htmlFor="basicSelect">Choose the desired region</label>
             <div className="inputs-container">
-                <Select
-                    inputId="basicSelect"
-                    ref={selectRef}
-                    options={regionsToI18Options}
-                    placeholder="Not selected"
-                    menuPortalTarget={document.body}
-                    styles={
-                        resolveIsTouched(isTouched, selectStyle)
-                    }
-                />
-                {/*<input type="number" min={1} max={24}/>*/}
+                <div className="input-container">
+                    <label htmlFor="basicSelect">
+                        <span>Choose the desired region </span>
+                    </label>
+                    <Select
+                        inputId="basicSelect"
+                        ref={selectRef}
+                        options={regionsToI18Options}
+                        placeholder="Not selected"
+                        isSearchable={false}
+                        menuPortalTarget={document.body}
+                        styles={
+                            resolveIsTouched(isTouched, selectStyle)
+                        }
+                    />
+                </div>
+                <div className="input-container">
+                    <label htmlFor="basicSelect">
+                        <span>Chose how far prediction is</span>
+                    </label>
+                    <input type="number"
+                           value={1}
+                           onInput={(e) => handleInput(e)}
+                           min={1} max={24}
+                    />
+                </div>
             </div>
             <button onClick={(e) =>
                 handleSubmit(e, provideSelectValue, clearSelect)}>
@@ -48,6 +62,16 @@ const handleSubmit = async (
         .catch((error) => console.log(error));
 }
 
+const handleInput= (e: React.FormEvent) => {
+    const input = e.target as HTMLInputElement;
+    const value = Number.parseInt(input.value);
+    if (value > 24)
+        input.value = '24';
+    if (!value || value <= 0)
+        input.value = '1';
+
+}
+
 const selectStyle: any = {
   menuPortal: (base: CSSObjectWithLabel) => ({
     ...base,
@@ -66,6 +90,7 @@ const selectStyle: any = {
     outline: "none",
     fontSize: "20px",
     boxShadow: 'none',
+    maxWidth: '300px',
     borderRadius: '10px',
     padding: '0',
     border: 'none',
