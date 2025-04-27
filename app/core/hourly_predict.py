@@ -5,6 +5,7 @@ import datetime as dt
 
 from app.core.scrapers.telegram.telegram_hourly_scraper import update_messages
 from app.core.scrapers.web_scraper.isw_scraper import ISWScraper
+from app.config.configuration import Config
 from app.core.services.WeatherService import WeatherService
 from app.core.services.AirAlarmsService import AirAlarmsService
 from app.core.entities.WeatherDTO import WeatherDTO
@@ -26,7 +27,7 @@ async def weather_dataframe() -> pd.DataFrame:
     df['day_hour'] = df['datetime'].dt.hour
     return df
 
-
+#
 async def telegram_dataframe() -> pd.DataFrame:
     date = await update_messages()
 
