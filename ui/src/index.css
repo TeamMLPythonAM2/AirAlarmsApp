@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background: linear-gradient(180deg, #22142B -8.75%, #4F3265 47.46%, #13081B 100%);
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+ul{
+  list-style: none;
+}
+
+#root{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: clip;
+}
+
+input{
+    border: none;
+    padding: 7px 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    color: #eae3f8;
+    background: linear-gradient(180deg, #C277D8 0%, #8345AA 100%);
+    box-shadow: #a367ca 0 0 5px, inset #af6fdc 0 0 15px;
+    outline: none;
+    transition: .3s all ease-in-out;
+    caret-color: #9D73DC;
+}
+
+input:focus{
+    box-shadow: #9D73DC 0 0 5px, inset #9D73DC 0 0 15px;
+    background: rgba(255, 255, 255, 0.07);
+    cursor: none;
+}
+
+.accent{
+    color: #AA78FF;
+}
+
+@keyframes appear {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

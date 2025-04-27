@@ -1,0 +1,14 @@
+footer{
+    margin-top: 25px;
+    background: linear-gradient(-4.05deg, #2A1E34 1.39%, #1E0820 64.16%);
+    backdrop-filter: blur(15px);
+    padding: 15px;
+}
+
+footer ul{
+    display: grid;
+    margin-top: 15px;
+    max-width: 450px;
+    grid-template-columns: 1fr 1fr;
+    font-size: 12px;
+}
