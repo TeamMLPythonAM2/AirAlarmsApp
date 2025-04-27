@@ -6,17 +6,6 @@
     }
 }
 
-.custom-accordion span{
-    background: linear-gradient(180deg, #9D73DC 0%, #AA78FF 100%);
-    filter: drop-shadow(0 0 2em #646cffaa);
-    font-family: "Aldrich", sans-serif;
-    font-weight: 400;
-    font-size: 2rem;
-    line-height: 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 .custom-accordion-head{
     display: flex;
     position: relative;

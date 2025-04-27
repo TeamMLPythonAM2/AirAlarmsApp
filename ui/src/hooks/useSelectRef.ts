@@ -18,7 +18,6 @@ const useSelectRef = <T, K>() => {
 
     const clearSelect = () => {
         setIsTouched(false);
-        // if (selectRef.current)
         selectRef.current?.clearValue();
     }
 
@@ -31,15 +30,24 @@ export const resolveIsTouched = (isTouched: boolean, baseStyle: any): any => (
 
 const touchedStyle = {
     control: (base: CSSObjectWithLabel) => ({
-        ...base,
-        backgroundColor: '#8A54AB',
-        color: '#fff3f3',
-        borderColor: '#f47d9a',
-        boxShadow: '0 0 0 1px #f47d9a',
-        '&:hover': {
-            borderColor:'#f496ac',
-        },
-    })
+    ...base,
+    backgroundColor: '#8A54AB',
+    color: '#fff3f3',
+    borderColor: '#f47d9a',
+    boxShadow: '0 0 0 1px #f47d9a',
+    '&:hover': {
+        borderColor:'#f496ac',
+    },
+    minHeight: 38,
+    height: 'auto',
+    outline: "none",
+    fontSize: "20px",
+    maxWidth: '300px',
+    borderRadius: '10px',
+    padding: '0',
+    border: 'none',
+    cursor: 'pointer',
+  }),
 }
 
 export default useSelectRef;

@@ -82,6 +82,41 @@
             animation: 1s slide ease-in-out forwards,
                 levitate 1s 1s ease-in-out infinite alternate-reverse;
         }
+
+        .prediction{
+            transition: all .3s ease-in-out;
+            position: absolute;
+            font-size: 40px;
+            width: 80%;
+            opacity: 0;
+            top: 50%;
+            right: 50%;
+            filter: blur(1px);
+            transform: translate(55%, -50%);
+            background: linear-gradient(
+                    160.02deg,
+                    rgba(202, 161, 255, 0.72) 23.08%,
+                    rgba(246, 230, 255, 0.76) 54.35%,
+                    rgba(250, 200, 255, 0.9) 90.12%
+            );
+            text-shadow: 0 4px 16px #C26DFF40,
+             0 4px 42px #D1A6FF40,
+             0 0 250px #F8D1FF69;
+            backdrop-filter: blur(2px);
+            font-family: "Orbitron", sans-serif;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 100%;
+            cursor: default;
+            text-align: center;
+            user-select: none;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 1;
+        }
+        .prediction.shown{
+            opacity: .8;
+        }
     }
     @media screen and (max-width: 740px) {
         display: flex;
@@ -103,6 +138,27 @@
     }
 }
 
+.custom-accordion h4 > span{
+    background: linear-gradient(180deg, #ccb3f3 0%, #c0abe3 100%);
+    filter: drop-shadow(0 0 2em #646cffaa);
+    font-family: "Aldrich", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.custom-accordion:last-child h4>span {
+    background: linear-gradient(180deg, #9D73DC 0%, #AA78FF 100%);
+    font-family: "Aldrich", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 @keyframes fluidMotion {
     0% {
         transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
@@ -117,23 +173,21 @@
         filter: hue-rotate(0deg);
     }
 }
-    @keyframes slide {
-        0%{
-            bottom: -25%;
-        }
-        100%{
-            bottom: -0.5%;
-        }
+@keyframes slide {
+    0%{
+        bottom: -25%;
     }
-
-    @keyframes levitate {
-        0%{
-            bottom: -2%;
-        }
-        100%{
-            bottom: -0.5%;
-        }
+    100%{
+        bottom: -0.5%;
     }
+}
 
-
+@keyframes levitate {
+    0%{
+        bottom: -2%;
+    }
+    100%{
+        bottom: -0.5%;
+    }
+}
 

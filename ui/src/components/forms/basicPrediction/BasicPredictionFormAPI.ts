@@ -1,21 +1,36 @@
 
 const BASE_ROUTE = 'http://localhost:3000/';
-export type BasicPredictionType = {region: string, datetime: string}
-
-export async function fetchData(region: string | undefined){
-        if (!region) return;
-        return await getPrediction(region)
+export type BasicPredictionType = {city: string, hour: string}
+export type BasicPredictionResponseType = {
+    "prediction": boolean,
+    "city_address": string,
+    "hour_to_add": number
 }
 
-const getPrediction = async (region: string) => {
+export async function fetchData(
+    region: string | undefined,
+    range: string | undefined
+): Promise<BasicPredictionResponseType | undefined> {
+        if (!region || !range) return;
+        return await getPrediction(region, range)
+}
+
+const getPrediction = async (region: string, range: string) => {
     if (!region) return "";
-    const urlParams = new URLSearchParams(constructQueryData(region));
-    const query_url = `${BASE_ROUTE}/prediction/${urlParams.toString()}`;
-    const response = await fetch(query_url);
+
+    const queryData = constructQueryData(region, range);
+    const query_url = `${BASE_ROUTE}/prediction`;
+
+    const response = await fetch(query_url, {
+        method: "GET",
+        headers: queryData,
+    });
+
     const responseData = await response.json();
-    return JSON.parse(responseData);
+    return responseData;
 }
 
-const constructQueryData = (region: string): BasicPredictionType => {
-    return {region: region, datetime: new Date().toISOString()}
+const constructQueryData = (region: string, range: string): BasicPredictionType => {
+    return { city: region, hour: `${range}` };
 }
+

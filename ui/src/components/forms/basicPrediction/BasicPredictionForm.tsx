@@ -1,17 +1,25 @@
-import React from "react";
+import React, {Dispatch} from "react";
 import './BasicPredictionForm.css'
 import {regionsToI18Options} from "../../UkraineMap/RegionsAPI.ts";
 import Select, {CSSObjectWithLabel} from "react-select";
 import useSelectRef, {resolveIsTouched} from "../../../hooks/useSelectRef.ts";
 import {fetchData} from "./BasicPredictionFormAPI.ts";
+import {useInput} from "../../../hooks/useInput.ts";
+import {BasicPredictionFormProps} from "../const.ts";
 
-const BasicPredictionForm = () => {
+export const LOADING_MESSAGE = "Wait...";
+
+const BasicPredictionForm = ({setter}: BasicPredictionFormProps) => {
     const [
         selectRef,
         isTouched,
         provideSelectValue,
         clearSelect
     ] = useSelectRef<string, string>();
+    const [
+        inputRef,
+        provideValue
+    ] = useInput();
 
     return(
         <form className="prediction-form">
@@ -36,7 +44,9 @@ const BasicPredictionForm = () => {
                     <label htmlFor="basicSelect">
                         <span>Chose how far prediction is</span>
                     </label>
-                    <input type="number"
+                    <input
+                           ref={inputRef}
+                           type="number"
                            value={1}
                            onInput={(e) => handleInput(e)}
                            min={1} max={24}
@@ -44,7 +54,7 @@ const BasicPredictionForm = () => {
                 </div>
             </div>
             <button onClick={(e) =>
-                handleSubmit(e, provideSelectValue, clearSelect)}>
+                handleSubmit(e, setter, provideSelectValue, provideValue, clearSelect)}>
                 Predict
             </button>
         </form>
@@ -52,15 +62,39 @@ const BasicPredictionForm = () => {
 
 const handleSubmit = async (
     e: React.MouseEvent,
+    setter: Dispatch<any>,
     selectValueProviderFn: () => string | undefined,
+    inputValueProvideFn: () => string | undefined,
     clearSelect: () => any
 ) => {
     e.preventDefault();
     const region = selectValueProviderFn();
-    fetchData(region)
-        .then(() => clearSelect())
-        .catch((error) => console.log(error));
-}
+    const hour = inputValueProvideFn();
+
+    if (region && hour)
+        setter(LOADING_MESSAGE);
+
+    await new Promise((resolve) => setTimeout(resolve, 600));
+
+    await fetchData(region, hour)
+        .then(
+            (data) => {
+                setter("");
+                setTimeout(() => {
+                    if (!data) return;
+                    setter(data);
+                    clearSelect();
+                }, 900);
+            }
+        )
+        .catch(
+            (error) => {
+                setter(`Stars didn't align, nothing were predicted`);
+                console.log(error);
+            }
+        );
+};
+
 
 const handleInput= (e: React.FormEvent) => {
     const input = e.target as HTMLInputElement;
@@ -83,7 +117,7 @@ const selectStyle: any = {
   }),
   control: (base: CSSObjectWithLabel) => ({
     ...base,
-    backgroundColor: "#8A54AB",
+    background: `linear-gradient(180deg, #C277D8 0%, #8345AA 100%)`,
     color: "#fff3f3",
     minHeight: 38,
     height: 'auto',

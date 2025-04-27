@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 *{
   margin: 0;
   padding: 0;
@@ -50,9 +52,9 @@ input{
     border-radius: 10px;
     font-size: 18px;
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    color: #D8BFFF;
-    background: none;
-    box-shadow: #8A54AB 0 0 5px, inset #8A54AB 0 0 15px;
+    color: #eae3f8;
+    background: linear-gradient(180deg, #C277D8 0%, #8345AA 100%);
+    box-shadow: #a367ca 0 0 5px, inset #af6fdc 0 0 15px;
     outline: none;
     transition: .3s all ease-in-out;
     caret-color: #9D73DC;
