@@ -23,15 +23,14 @@ export const handleSubmit = async (
     setter: Dispatch<any>,
     getSelectValue: () => string | undefined,
     getInputValue: () => string | undefined,
-    clearSelect: () => void,
-    clearInput: () => void
+    toggleButton: Dispatch<any>,
 ) => {
     const region = getSelectValue();
     const hour = getInputValue();
-    console.log(region, hour);
-    if (!region || !hour) return;
 
+    if (!region || !hour) return;
     setter(LOADING_MESSAGE);
+    toggleButton(true);
 
     try {
         await sleep(600);
@@ -41,11 +40,10 @@ export const handleSubmit = async (
 
         const message = data.prediction ? TRUE_MESSAGE : FALSE_MESSAGE;
         setter(`${message} in ${data.hour_to_add} hour(s) in ${transformResponseRegion(data)}`);
-        clearSelect();
-        clearInput();
 
     } catch (error) {
         setter(`Stars didn't align, nothing was predicted`);
         console.warn(error);
     }
+    toggleButton(false);
 };

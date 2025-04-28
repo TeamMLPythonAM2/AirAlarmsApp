@@ -1,9 +1,12 @@
+
 type PredictButtonProps = {
+    disabled?: boolean;
     onClick: () => void;
 };
 
-export const PredictButton = ({ onClick }: PredictButtonProps) => (
-    <button type="button" onClick={onClick}>
+export const PredictButton = ({ disabled, onClick }: PredictButtonProps) => {
+    console.log(disabled)
+    return <button disabled={disabled} type="button" onClick={onClick}>
         Predict
     </button>
-);
+};
