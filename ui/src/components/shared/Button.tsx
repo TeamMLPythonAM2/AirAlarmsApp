@@ -5,8 +5,7 @@ type PredictButtonProps = {
 };
 
 export const PredictButton = ({ disabled, onClick }: PredictButtonProps) => {
-    console.log(disabled)
-    return <button disabled={disabled} type="button" onClick={onClick}>
+    return <button className={disabled ? "disabled" : ""} disabled={disabled} type="button" onClick={onClick}>
         Predict
     </button>
 };
