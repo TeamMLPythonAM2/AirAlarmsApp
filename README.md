@@ -20,6 +20,7 @@
 - (Make sure you are in AirAlarmsApp/ directory with activated venv)
 - Run ```uvicorn app.main:app```
 
+
 ### Setup daily isw scraper </h2>
 
 - Make sure directory `AirAlarmsApp/app/files/isw_reports/full_reports/2025` , `../isw_reports/short_reports` , `../isw_reports/links` exist
