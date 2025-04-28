@@ -2,7 +2,7 @@ import {ROUTES, RouteType} from "./routes.ts";
 import {useState} from "react";
 import React from "react";
 import {Link, Location, useLocation} from "react-router";
-import logo from "./logo.svg";
+import logoImage from "./logo.svg";
 import burger from "./burger-menu.svg"
 
 
@@ -13,7 +13,7 @@ const Header = () => {
     return <div className="header-wrapper">
         <header>
             <div className="logo">
-                <img src={logo} alt="logo"/>
+                <img src={logoImage} alt="logo"/>
                 <div className="logo-img"></div>
                 <h2>Alarms Predictor</h2>
             </div>

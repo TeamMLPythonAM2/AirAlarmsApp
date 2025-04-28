@@ -17,8 +17,8 @@
 ### To run the server follow next steps</h2>
 
 - Setup Security Group for your EC2 instance with Custom TCP protocol and port
-- Go to app directory `cd app/` (Make sure you are in AirAlarmsApp/ directory with activated venv)
-- Run `uvicorn app:app --host 0.0.0.0 --port <your_port>`
+- (Make sure you are in AirAlarmsApp/ directory with activated venv)
+- Run ```uvicorn app.main:app```
 
 ### Setup daily isw scraper </h2>
 
@@ -30,5 +30,10 @@ As the result, your server will load latest daily isw reports everyday at 23:00 
 
 
   
-### System diagram 
-<img src="./diagram.jpeg" width="400"/>
+### System diagram (deprecated)
+<img src="./diagram.jpeg" alt="" width="400"/>
+
+### System diagram (updated)
+  <img src="./diagram_new_1.jpg" alt="" width="400"/>
+  <img src="./diagram_new_2.jpg" alt="" width="400"/>
+

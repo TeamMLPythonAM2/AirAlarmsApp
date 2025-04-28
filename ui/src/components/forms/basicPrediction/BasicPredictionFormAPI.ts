@@ -1,6 +1,7 @@
 
 const BASE_ROUTE = 'http://13.61.68.34:8796';
 export type BasicPredictionType = {city: string, hour: string}
+
 export type BasicPredictionResponseType = {
     "prediction": boolean,
     "city_address": string,
@@ -20,7 +21,6 @@ const getPrediction = async (region: string, range: string) => {
 
     const queryData = constructQueryData(region, range);
     const query_url = `${BASE_ROUTE}/prediction`;
-
     const response = await fetch(query_url, {
         method: "GET",
         headers: {
@@ -28,6 +28,10 @@ const getPrediction = async (region: string, range: string) => {
             key: "j8hhZHBR5DmyaEBjMvwi6g9hVwkgSAQRiPLwr5QjGNYarRfac"
         }
     });
+
+    if(!response.ok)
+        throw new Error("Failed fetching response");
+
     return await response.json();
 }
 
