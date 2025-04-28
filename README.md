@@ -17,8 +17,9 @@
 ### To run the server follow next steps</h2>
 
 - Setup Security Group for your EC2 instance with Custom TCP protocol and port
-- Go to app directory `cd app/` (Make sure you are in AirAlarmsApp/ directory with activated venv)
-- Run ```uvicorn app:app --reload```
+- (Make sure you are in AirAlarmsApp/ directory with activated venv)
+- Run ```uvicorn app.main:app```
+
 
 ### Setup daily isw scraper </h2>
 

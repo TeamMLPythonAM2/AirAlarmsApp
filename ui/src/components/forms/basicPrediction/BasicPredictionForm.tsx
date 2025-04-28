@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './BasicPredictionForm.css'
 import useSelectRef from "../../../hooks/useSelectRef.ts";
 import {useInput} from "../../../hooks/useInput.ts";
@@ -9,25 +9,25 @@ import {PredictButton} from "../../shared/Button.tsx";
 
 
 const BasicPredictionForm = ({ setter }: BasicPredictionFormProps) => {
+
+    const [disabled, setDisabled] = useState<boolean>(false);
+
     const [
         selectRef,
         isTouched,
-        provideSelectValue,
-        clearSelect
+        provideSelectValue
     ] = useSelectRef<string, string>();
 
     const [
         inputRef,
-        provideValue,
-        clearInput
+        provideValue
     ] = useInput();
 
     const onSubmit = () => handleSubmit(
         setter,
         provideSelectValue,
         provideValue,
-        clearSelect,
-        clearInput
+        setDisabled,
     );
 
     return (
@@ -36,7 +36,7 @@ const BasicPredictionForm = ({ setter }: BasicPredictionFormProps) => {
                 <SelectField selectRef={selectRef} isTouched={isTouched} />
                 <InputField inputRef={inputRef} onBlur={handleInputBlur} />
             </div>
-            <PredictButton onClick={onSubmit} />
+            <PredictButton disabled={disabled}  onClick={onSubmit} />
         </form>
     );
 };
