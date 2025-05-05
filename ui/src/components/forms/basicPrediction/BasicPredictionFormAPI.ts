@@ -1,5 +1,5 @@
+import {BASE_REQUEST_URL} from "../../../consts.ts";
 
-const BASE_ROUTE = 'https://airalarms.pp.ua/api';
 export type BasicPredictionType = {city: string, hour: string}
 
 export type BasicPredictionResponseType = {
@@ -20,7 +20,7 @@ const getPrediction = async (region: string, range: string) => {
     if (!region) return "";
 
     const queryData = constructQueryData(region, range);
-    const query_url = `${BASE_ROUTE}/prediction`;
+    const query_url = `${BASE_REQUEST_URL}/prediction`;
     const response = await fetch(query_url, {
         method: "GET",
         headers: {
