@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-const BASE_ROUTE = 'ws://13.61.68.34:8796';
+const BASE_ROUTE = 'wss://airalarms.pp.ua';
 
 export const ALARMS_KEY = "ALARMS_REGIONS"
 export const SPECIAL_REGIONS = ["crimea", "luhanska"];
