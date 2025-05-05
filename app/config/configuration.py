@@ -97,6 +97,6 @@ class Config:
     }
 
     MODELS_PATH = os.path.join(FILES_PATH, 'models')
-    MODEL_FOR_PREDICT_PATH = os.path.join(MODELS_PATH, '1_hist_gradient_boosting_classifier_v3.pkl')
+    MODEL_FOR_PREDICT_PATH = os.path.join(MODELS_PATH, '1_hist_gradient_boosting_classifier_v4.pkl')
     
     KYIV_TZ = pytz.timezone("Europe/Kyiv")

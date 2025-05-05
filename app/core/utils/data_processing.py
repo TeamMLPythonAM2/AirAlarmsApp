@@ -3,7 +3,8 @@ import datetime as dt
 import os
 
 from app.config.configuration import Config
-
+from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
 
 def prepare_merged_dataframe(
         weather_df: pd.DataFrame,
@@ -663,3 +664,28 @@ def save_data(data: pd.DataFrame, date: dt.datetime) -> None:
 
     path = os.path.join(Config.DATASETS_PATH, f'{date.strftime('%Y-%m-%d_%H')}.parquet')
     df.to_parquet(path, index=False)
+
+def vectorize_with_bigrams(
+        dataframe,
+        column_to_vectorize: str,
+        name_of_new_column: str,
+        top_n=100
+):
+    def get_top_tfidf_words(text):
+        vectorizer = TfidfVectorizer(ngram_range=(2, 2), max_features=1000)
+        tfidf_matrix = vectorizer.fit_transform([text])
+
+        scores = tfidf_matrix.toarray()[0]
+
+        top_indices = np.argsort(scores)[::-1][:top_n]
+        top_words = [scores[i] for i in top_indices]
+        if len(top_words) < top_n:
+            top_words.extend(np.zeros(top_n - len(top_words)))
+        return np.array(top_words)
+
+    new_dataframe = dataframe.copy()
+    new_dataframe[name_of_new_column] = new_dataframe.apply(
+        lambda row: get_top_tfidf_words(row[column_to_vectorize]),
+        axis=1
+    )
+    return new_dataframe
