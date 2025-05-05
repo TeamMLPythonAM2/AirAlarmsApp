@@ -1,5 +1,5 @@
 
-const BASE_ROUTE = 'http://13.61.68.34:8796';
+const BASE_ROUTE = 'https://airalarms.pp.ua/api';
 export type BasicPredictionType = {city: string, hour: string}
 
 export type BasicPredictionResponseType = {
