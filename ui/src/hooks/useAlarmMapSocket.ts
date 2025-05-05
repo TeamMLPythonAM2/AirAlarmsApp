@@ -1,6 +1,5 @@
-import {useEffect, useState} from "react";
-
-const BASE_ROUTE = 'wss://airalarms.pp.ua';
+import { useEffect, useState } from "react";
+import { WEBSOCKET_URL } from "../consts.ts";
 
 export const ALARMS_KEY = "ALARMS_REGIONS"
 export const SPECIAL_REGIONS = ["crimea", "luhanska"];
@@ -11,7 +10,7 @@ const useAlarmMapSocket = () => {
         setAlarmRegions
     ] = useState<string[]>([]);
 
-    const socket = new WebSocket(`${BASE_ROUTE}/ws/current_alerts`);
+    const socket = new WebSocket(`${WEBSOCKET_URL}/ws/current_alerts`);
 
     useEffect(() => {
         fetchStorage(setAlarmRegions)
