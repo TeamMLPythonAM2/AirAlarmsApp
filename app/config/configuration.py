@@ -23,7 +23,7 @@ class Config:
     WEATHER_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
     WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
 
-    FILES_PATH = os.path.join(Path(__file__).resolve().parents[2], "files")
+    FILES_PATH = os.path.join(Path(__file__).resolve().parents[2], "storage")
 
     VECTORIZERS_PATH = os.path.join(FILES_PATH, "vectorizers")
     TELEGRAM_VECTORIZER_PATH = os.path.join(VECTORIZERS_PATH, "telegram_tfidf_vectorizer.pkl")
