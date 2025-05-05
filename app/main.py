@@ -19,12 +19,12 @@ app.add_middleware(
 )
 app.mount("/static", StaticFiles(directory="dist", html=True), name="static")
 
-app.include_router(router_ws)
-app.include_router(router_get)
-app.include_router(router_alarms_all)
-app.include_router(router_predict)
+app.include_router(router_ws, prefix="/api")
+app.include_router(router_get, prefix="/api")
+app.include_router(router_alarms_all, prefix="/api")
+app.include_router(router_predict, prefix="/api")
 
 
-@app.get("/")
-async def root():
+@app.get("/{full_path:path}")
+async def root(full_path: str):
     return FileResponse("dist/index.html")
