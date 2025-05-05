@@ -35,7 +35,7 @@ def get_prediction_for_all_hours(region="all"):
     else:
         if region not in grouped.groups:
             raise ValueError(f"Region '{region}' not in prediction data.")
-        cities = region
+        cities = [region]
 
     for city in cities:
         city_data = grouped.get_group(city)
