@@ -2284,7 +2284,7 @@ var require_react_dom_client_development = __commonJS({
           case "annotation-xml":
           case "color-profile":
           case "font-face":
-          case "font-face-src":
+          case "font-face-icons":
           case "font-face-uri":
           case "font-face-format":
           case "font-face-name":
@@ -14342,7 +14342,7 @@ var require_react_dom_client_development = __commonJS({
         }), setInitialProperties(key, "link", preloadProps), markNodeAsHoistable(key), ownerDocument.head.appendChild(key));
       }
       function getScriptKey(src) {
-        return '[src="' + escapeSelectorAttributeValueInsideDoubleQuotes(src) + '"]';
+        return '[icons="' + escapeSelectorAttributeValueInsideDoubleQuotes(src) + '"]';
       }
       function getScriptSelectorFromKey(key) {
         return "script[async]" + key;
@@ -14522,7 +14522,7 @@ var require_react_dom_client_development = __commonJS({
               outsideHostContainerContext && (type ? props.onLoad || props.onError ? console.error(
                 "Cannot render a <script> with onLoad or onError listeners outside the main document. Try removing onLoad={...} and onError={...} or moving it into the root <head> tag or somewhere in the <body>."
               ) : console.error(
-                "Cannot render a <script> outside the main document without `async={true}` and a non-empty `src` prop. Ensure there is a valid `src` and either make the script async or move it into the root <head> tag or somewhere in the <body>."
+                "Cannot render a <script> outside the main document without `async={true}` and a non-empty `icons` prop. Ensure there is a valid `icons` and either make the script async or move it into the root <head> tag or somewhere in the <body>."
               ) : console.error(
                 'Cannot render a sync or defer <script> outside the main document without knowing its order. Try adding async="" or moving it into the root <head> tag.'
               ));
