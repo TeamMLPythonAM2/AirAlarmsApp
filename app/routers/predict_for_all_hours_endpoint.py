@@ -14,7 +14,7 @@ import os
 current_time = datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
 current_time = current_time.strftime("%Y-%m-%d_%H")
 
-router_task_7 = APIRouter()
+router_alarms_all = APIRouter()
 file_path = os.path.join(Config.HOURLY_PREDICTIONS_PATH, f"{current_time}.parquet")
 
 
@@ -35,7 +35,7 @@ def get_prediction_for_all_hours(region="all"):
     else:
         if region not in grouped.groups:
             raise ValueError(f"Region '{region}' not in prediction data.")
-        cities = region
+        cities = [region]
 
     for city in cities:
         city_data = grouped.get_group(city)
@@ -44,7 +44,7 @@ def get_prediction_for_all_hours(region="all"):
     return result
 
 
-@router_task_7.get('/prediction_7')
+@router_alarms_all.get('/alarms/all')
 async def prediction(
     city: str = Header(...),
     key: str = Header(...)

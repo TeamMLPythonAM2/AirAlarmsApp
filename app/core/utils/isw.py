@@ -38,3 +38,4 @@ def vectorize_dataframe(df, content_col='text_lemm'):
     pca = joblib.load(Config.ISW_PCA_PATH)
     tfidf_matrix = tfidf_vectorizer.transform(df[content_col])
     return pca.transform(tfidf_matrix.toarray())
+

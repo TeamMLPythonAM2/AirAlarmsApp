@@ -23,16 +23,16 @@ class Config:
     WEATHER_API_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
     WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
 
-    FILES_PATH = os.path.join(Path(__file__).resolve().parents[2], "files")
+    STORAGE_PATH = os.path.join(Path(__file__).resolve().parents[2], "storage")
 
-    VECTORIZERS_PATH = os.path.join(FILES_PATH, "vectorizers")
+    VECTORIZERS_PATH = os.path.join(STORAGE_PATH, "vectorizers")
     TELEGRAM_VECTORIZER_PATH = os.path.join(VECTORIZERS_PATH, "telegram_tfidf_vectorizer.pkl")
     ISW_VECTORIZER_PATH = os.path.join(VECTORIZERS_PATH, "isw_tfidf_vectorizer.pkl")
 
-    HOURLY_PREDICTIONS_PATH = os.path.join(FILES_PATH, "hourly_predictions")
-    DATASETS_PATH = os.path.join(FILES_PATH, "datasets")
+    HOURLY_PREDICTIONS_PATH = os.path.join(STORAGE_PATH, "hourly_predictions")
+    DATASETS_PATH = os.path.join(STORAGE_PATH, "datasets")
 
-    PCAS_PATH = os.path.join(FILES_PATH, "pcas")
+    PCAS_PATH = os.path.join(STORAGE_PATH, "pcas")
     TELEGRAM_PCA_PATH = os.path.join(PCAS_PATH, "telegram_pca_100.pkl")
     ISW_PCA_PATH = os.path.join(PCAS_PATH, "isw_pca_100.pkl")
 
@@ -43,28 +43,28 @@ class Config:
     ISW_URL = "https://isw.pub/"
 
     ISW_PARQUET_PATH = os.path.join(
-        FILES_PATH, "isw_reports", "isw_data.parquet"
+        STORAGE_PATH, "isw_reports", "isw_data.parquet"
     )
     ISW_CSV_PATH = os.path.join(
-        FILES_PATH, "isw_reports", "isw_data.csv"
+        STORAGE_PATH, "isw_reports", "isw_data.csv"
     )
     ISW_PICKLE_PATH = os.path.join(
-        FILES_PATH, "isw_reports", "isw_data.pickle"
+        STORAGE_PATH, "isw_reports", "isw_data.pickle"
     )
     SHORT_REPORTS_PATH = os.path.join(
-        FILES_PATH, "isw_reports", "short_reports"
+        STORAGE_PATH, "isw_reports", "short_reports"
     )
     FULL_REPORTS_PATH = os.path.join(
-        FILES_PATH, "isw_reports", "full_reports"
+        STORAGE_PATH, "isw_reports", "full_reports"
     )
     LINKS_PATH = os.path.join(
-        FILES_PATH, "isw_reports", "links"
+        STORAGE_PATH, "isw_reports", "links"
     )
 
     URL_PATTERN = Annotated[str, StringConstraints(pattern=r"https?://[-.a-zA-Z]{1,}")]
 
     # telegram parser
-    TELEGRAM_MESSAGES_PATH = os.path.join(FILES_PATH, 'telegram_messages')
+    TELEGRAM_MESSAGES_PATH = os.path.join(STORAGE_PATH, 'telegram_messages')
     TELEGRAM_API_ID: int = os.environ.get('TELEGRAM_API_ID')
     TELEGRAM_API_HASH: str = os.environ.get('TELEGRAM_API_HASH')
     TELEGRAM_API_PHONE: str = os.environ.get('TELEGRAM_API_PHONE')
@@ -96,7 +96,29 @@ class Config:
         'Donetsk': 0.9792767081873717
     }
 
-    MODELS_PATH = os.path.join(FILES_PATH, 'models')
-    MODEL_FOR_PREDICT_PATH = os.path.join(MODELS_PATH, '1_hist_gradient_boosting_classifier_v3.pkl')
+    MODELS_PATH = os.path.join(STORAGE_PATH, 'models')
+    MODEL_FOR_PREDICT_PATH = os.path.join(MODELS_PATH, '1_hist_gradient_boosting_classifier_v4.pkl')
     
     KYIV_TZ = pytz.timezone("Europe/Kyiv")
+
+
+def init_dirs():
+    dirs = [
+        Config.STORAGE_PATH,
+        Config.VECTORIZERS_PATH,
+        Config.HOURLY_PREDICTIONS_PATH,
+        Config.DATASETS_PATH,
+        Config.PCAS_PATH,
+        Config.DOWNLOAD_DIRECTORY_NLTK,
+        Config.DOWNLOAD_DIRECTORY_STANZA,
+        Config.SHORT_REPORTS_PATH,
+        Config.FULL_REPORTS_PATH,
+        Config.LINKS_PATH,
+        Config.TELEGRAM_MESSAGES_PATH,
+        Config.MODELS_PATH
+    ]
+
+    for dir in dirs:
+        os.makedirs(dir, exist_ok=True)
+
+init_dirs()

@@ -38,7 +38,7 @@ def clean_stopwords(stopword_list):
 
 def read_uk_stopwords():
     df = pd.read_csv(
-        os.path.join(Config.FILES_PATH, 'stopwords_ua.txt'),
+        os.path.join(Config.STORAGE_PATH, 'stopwords_ua.txt'),
         header=None,
         names=['stopwords']
     )
