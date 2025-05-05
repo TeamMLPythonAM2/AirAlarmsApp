@@ -10,7 +10,7 @@ const useAlarmMapSocket = () => {
         setAlarmRegions
     ] = useState<string[]>([]);
 
-    const socket = new WebSocket(`${WEBSOCKET_URL}/ws/current_alerts`);
+    const socket = new WebSocket(`${WEBSOCKET_URL}/api/ws/current_alerts`);
 
     useEffect(() => {
         fetchStorage(setAlarmRegions)

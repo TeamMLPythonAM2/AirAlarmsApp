@@ -1,13 +1,14 @@
-.prediction-form{
+.day-prediction-form{
     display: flex;
     flex-direction: column;
     font-family: "Josefin Sans", sans-serif;
     gap: 15px;
-    padding: 15px 25px 30px 25px;
+    padding: 15px 25px 5px 25px;
     label{
         display: flex;
         justify-content: space-between;
     }
+
     label span{
         display: block;
         background: linear-gradient(180deg, #D8BFFF 20%, #EE8E9B 70%);
@@ -64,5 +65,23 @@
         /*flex-direction: column-reverse;*/
     }
 }
+
+.container {
+  display: grid;
+  margin: 10px 30px 30px 30px;
+  padding: 10px;
+  border-radius: 25px;
+  background: radial-gradient(50% 50% at 50% 50%, #4D2964 10%, #321F44 99.99%);
+  grid-auto-flow: column;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+@media screen and (max-width: 740px) {
+.container {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(12, 1fr);
+  }
+}
+
 
 

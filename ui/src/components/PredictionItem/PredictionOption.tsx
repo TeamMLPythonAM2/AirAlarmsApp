@@ -13,11 +13,11 @@ export interface PredictionOption {
     setPrediction: Dispatch<any>
 }
 
-const PredictionOptionItem = <T, >(
+const PredictionOptionItem = (
     {
         label,
         FormComponent,
-        setPrediction
+        setPrediction,
     }: PredictionOption) => {
     return <Accordion
         accordionHead={<h4><span>{label}</span></h4>}
