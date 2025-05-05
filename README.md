@@ -37,4 +37,8 @@ As the result, your server will load latest daily isw reports everyday at 23:00 
 ### System diagram (updated)
   <img src="images/diagram_new_1.jpg" alt="" width="400"/>
   <img src="images/diagram_new_2.jpg" alt="" width="400"/>
+  
+### UI screens
+  <img src="images/ui_page_1.jpg" alt="" width="400"/>
+  <img src="images/ui_page_2.jpg" alt="" width="400"/>
 
