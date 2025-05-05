@@ -1,6 +1,20 @@
-# Alarms Predictor
+<picture>
+  <img
+    src="./images/logo.png"
+    alt="Alarms Predictor logo"
+  />
+</picture>
 
-### Project description and problem statement
+**Table of contents**
+
+- [Project description and problem statement](#project-description-and-problem-statement)
+- [Setup project](#setup-project)
+- [Run server](#run-server)
+- [Setup hourly predictions](#setup-hourly-predictions)
+- [System diagrams](#system-diagrams)
+- [User Interface](#user-interface)
+
+# Project description and problem statement
 
 Alarms Predictor is a web application designed to forecast air raid alerts across different regions of Ukraine. It is aimed at people who need to schedule their activities in advance and rely on timely information about potential threats.
 
@@ -13,45 +27,39 @@ The application offers two types predictions:
 
 In addition, the application features an interactive map that displays the current alarm status across all regions of Ukraine in real time.
 
-### To setup the project follow the next steps</h2>
+# Setup project
 
 - Clone repository `git clone <path>`
 - Go to AirAlarmsApp directory `cd AirAlarmsApp/`
 - Create venv `python -m venv <path>` or `.venv python3 -m venv <path>`
 - Activate venv `. .venv/bin/activate`
 - install required packages `pip install -r requirements.txt`
-- create .env file inside AirAlarmsApp directory with such keys (telegram keys are optional):
+- create .env file inside AirAlarmsApp directory with such keys:
   - TELEGRAM_API_ID
   - TELEGRAM_API_HASH
   - TELEGRAM_API_PHONE
   - WEATHER_API_KEY
   - ALARMS_API_KEY
+  - PREDICTION_KEY
 
-### To run the server follow the next steps</h2>
+# Run server
 
+- Make sure `.venv` is activated and you are inside `AirAlarmsApp/` directory.
 - Setup Security Group for your EC2 instance with Custom TCP protocol and port
-- (Make sure you are in AirAlarmsApp/ directory with activated venv)
-- Run ```uvicorn app.main:app```
+- Run `uvicorn app.main:app --host 0.0.0.0 --port <custom_port>`
 
+# Setup hourly predictions
 
-### Setup daily ISW scraper </h2>
-
-- Make sure directory `AirAlarmsApp/app/files/isw_reports/full_reports/2025` , `../isw_reports/short_reports` , `../isw_reports/links` exists
-- Create file for logs with such path `/home/ubuntu/AirAlarmsApp/files/iswlogs.log`
 - Open crontab file with command `crontab -e`
-- Copy this line in crontab file `0 23 * * * PYTHONPATH=/home/ubuntu/AirAlarmsApp /home/ubuntu/AirAlarmsApp/.venv/bin/python3.12 -m app.core.scrapers.web_scraper.web_daily_scraper >> /home/ubuntu/AirAlarmsApp/files/iswlogs.log 2>&1`
-As a result, your server will load latest daily ISW reports every day at 23:00 (01:00 for Kyiv)
+- Copy this line in crontab file `0 * * * * cd /home/ubuntu/AirAlarmsApp && /home/ubuntu/AirAlarmsApp/.venv/bin/python3.12 -m app.core.hourly_predict >> /home/ubuntu/AirAlarmsApp/storage/hourly.log 2>&1`
+As a result, your server will automatically generate and save hourly predictions for air alarms every hour.
 
+# System diagrams
 
-  
-### System diagram (deprecated)
-<img src="images/diagram.jpeg" alt="" width="400"/>
-
-### System diagram (updated)
   <img src="images/diagram_new_1.jpg" alt="" width="400"/>
   <img src="images/diagram_new_2.jpg" alt="" width="400"/>
   
-### UI screens
+# User interface
   <img src="images/ui_page_1.png" alt="" width="800"/>
   <img src="images/ui_page_2.png" alt="" width="800"/>
 
