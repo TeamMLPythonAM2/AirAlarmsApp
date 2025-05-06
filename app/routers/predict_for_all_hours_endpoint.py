@@ -9,16 +9,14 @@ import os
 # Router just for task 7
 
 
-# '%Y-%m-%d_%H'
-
-current_time = datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
-current_time = current_time.strftime("%Y-%m-%d_%H")
-
 router_alarms_all = APIRouter()
-file_path = os.path.join(Config.HOURLY_PREDICTIONS_PATH, f"{current_time}.parquet")
 
 
 def get_prediction_for_all_hours(region="all"):
+    current_time = datetime.now(tz=Config.KYIV_TZ).replace(minute=0, second=0, microsecond=0)
+    current_time = current_time.strftime("%Y-%m-%d_%H")
+    file_path = os.path.join(Config.HOURLY_PREDICTIONS_PATH, f"{current_time}.parquet")
+
     prediction_now = pd.read_parquet(file_path)
 
     result = {
