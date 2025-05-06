@@ -43,7 +43,7 @@ jobs:
           cd /home/$EC2_USER/app/ui
           npm install
           npm run build
-          cd /home/$EC2_USER/app/server
+          cd /home/$EC2_USER/app/app
           pip install -r requirements.txt
         EOF
       env:
