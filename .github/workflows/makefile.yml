@@ -14,6 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: permissions
+      run: chmod +x ./configure
+
     - name: configure
       run: ./configure
 
