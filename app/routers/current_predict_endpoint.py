@@ -32,7 +32,7 @@ async def prediction(
     key: str = Header(...)
 ):
     key_check(key)
-    return {"prediction": get_prediction(city, hour - 1),
+    return {"prediction": get_prediction(city, hour),
             "city_address": city,
             "hour_to_add": hour}
 

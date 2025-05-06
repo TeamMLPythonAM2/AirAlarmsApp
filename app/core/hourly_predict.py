@@ -24,9 +24,9 @@ async def weather_dataframe() -> pd.DataFrame:
 
     df = pd.DataFrame([w.model_dump() for w in weathers])
     df['dist_from_front'] = df['city_address'].map(Config.LOCATION_DIST_DICT)
+    df['datetime'] = df['datetime'] + pd.Timedelta(hours=1)
     df['day_hour'] = df['datetime'].dt.hour
     return df
-
 
 
 async def telegram_dataframe() -> pd.DataFrame:
