@@ -32,7 +32,6 @@ jobs:
     # Install Python dependencies for the server
     - name: Install Python dependencies for Server
       run: |
-        cd app
         pip install -r requirements.txt
 
     # Deploy to EC2 (example)
