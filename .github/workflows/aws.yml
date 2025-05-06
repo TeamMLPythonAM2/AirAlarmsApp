@@ -39,11 +39,11 @@ jobs:
     
         ssh-keyscan -H "$EC2_HOST" >> ~/.ssh/known_hosts
     
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa "$EC2_USER@$EC2_HOST" << "EOF"
-          cd /home/$EC2_USER/app/ui
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa "ubuntu@$EC2_HOST" << "EOF"
+          cd /home/ubuntu/app/ui
           npm install
           npm run build
-          cd /home/$EC2_USER/app/app
+          cd /home/ubuntu/app/app
           pip install -r requirements.txt
         EOF
       env:
