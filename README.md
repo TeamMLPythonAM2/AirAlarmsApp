@@ -33,14 +33,9 @@ In addition, the application features an interactive map that displays the curre
 - Go to AirAlarmsApp directory `cd AirAlarmsApp/`
 - Create venv `python -m venv <path>` or `.venv python3 -m venv <path>`
 - Activate venv `. .venv/bin/activate`
-- install required packages `pip install -r requirements.txt`
-- create .env file inside AirAlarmsApp directory with such keys:
-  - TELEGRAM_API_ID
-  - TELEGRAM_API_HASH
-  - TELEGRAM_API_PHONE
-  - WEATHER_API_KEY
-  - ALARMS_API_KEY
-  - PREDICTION_KEY
+- Install required packages `pip install -r requirements.txt`
+- Create `.env` file inside AirAlarmsApp directory according to `.env.sample`;
+- If you want to run UI too, you should create `.env` file inside ui directory like in `.env.sample`
 
 # Run server
 
@@ -55,11 +50,11 @@ In addition, the application features an interactive map that displays the curre
 As a result, your server will automatically generate and save hourly predictions for air alarms every hour.
 
 # System diagrams
+<div style="display: grid; grid-template-columns: 1fr 1fr">
+  <img src="images/diagram_new_1.jpg" alt=""/>
+  <img src="images/diagram_new_2.jpg" alt=""/>
+</div>
 
-  <img src="images/diagram_new_1.jpg" alt="" width="400"/>
-  <img src="images/diagram_new_2.jpg" alt="" width="400"/>
-  
 # User interface
-  <img src="images/ui_page_1.png" alt="" width="800"/>
-  <img src="images/ui_page_2.png" alt="" width="800"/>
+  <img src="images/ui.png" alt="" width="800"/>
 
