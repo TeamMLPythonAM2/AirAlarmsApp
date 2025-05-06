@@ -34,7 +34,7 @@ const PredictionOptions = () => {
             <h1 className="align-left">Choose prediction:</h1>
             <div className="align-left predictions-table">
                 <AccordionsContext.Provider value={[]}>
-                    <PredictionOptionsList setPrediction={setPrediction}/>
+                  <PredictionOptionsList setPrediction={setPrediction}/>
                 </AccordionsContext.Provider>
             </div>
         </div>
