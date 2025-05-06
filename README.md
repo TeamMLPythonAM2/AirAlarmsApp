@@ -41,6 +41,7 @@ In addition, the application features an interactive map that displays the curre
 
 - Make sure `.venv` is activated and you are inside `AirAlarmsApp/` directory.
 - Setup Security Group for your EC2 instance with Custom TCP protocol and port
+- Run `cd ui && npm run build`
 - Run `uvicorn app.main:app --host 0.0.0.0 --port <custom_port>`
 
 # Setup hourly predictions
