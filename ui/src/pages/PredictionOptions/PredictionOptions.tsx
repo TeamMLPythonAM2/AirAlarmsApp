@@ -28,27 +28,32 @@ const PredictionOptions = () => {
         prediction,
         setPrediction
     ] = useState<string>("");
+    
     return <div className="grid">
         <div>
             <h1 className="align-left">Choose prediction:</h1>
             <div className="align-left predictions-table">
                 <AccordionsContext.Provider value={[]}>
-                    <PredictionOptionsList setPrediction={setPrediction}/>
+                  <PredictionOptionsList setPrediction={setPrediction}/>
                 </AccordionsContext.Provider>
             </div>
         </div>
-        <div className="prediction-result">
-            <img src={sphere} alt="Prediction result"/>
-            <img className="holder" src={holder} alt="holder"/>
-            <div className={
-                "prediction" + (prediction || prediction == LOADING_MESSAGE ? " shown" : "")}>
-                {prediction}
-            </div>
+        <PredictionSphere prediction={prediction}/>
+    </div>
+}
+
+const PredictionSphere = ({prediction}: {prediction: string}) => {
+   return <div className="prediction-result">
+        <img src={sphere} alt="Prediction result"/>
+        <img className="holder" src={holder} alt="holder"/>
+        <div className={
+            "prediction" + (prediction || prediction == LOADING_MESSAGE ? " shown" : "")}>
+            {prediction}
         </div>
     </div>
 }
 
-const PredictionOptionsList = ({setPrediction}: {setPrediction: Dispatch<any> }) => {
+const PredictionOptionsList = ({setPrediction}: { setPrediction: Dispatch<any> }) => {
     return PREDICTION_OPTIONS.map(
         (option, index) =>
             <PredictionOptionItem

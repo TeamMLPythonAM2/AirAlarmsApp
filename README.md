@@ -50,9 +50,9 @@ In addition, the application features an interactive map that displays the curre
 As a result, your server will automatically generate and save hourly predictions for air alarms every hour.
 
 # System diagrams
-<div style="display: grid; grid-template-columns: 1fr 1fr">
-  <img src="images/diagram_new_1.jpg" alt=""/>
-  <img src="images/diagram_new_2.jpg" alt=""/>
+<div style="display: grid; grid-template-columns: 1fr 1fr;">
+  <img src="images/diagram_new_1.jpg" width="400px" alt=""/>
+  <img src="images/diagram_new_2.jpg" width="400px" alt=""/>
 </div>
 
 # User interface
