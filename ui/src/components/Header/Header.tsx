@@ -18,12 +18,15 @@ const Header = () => {
                 <h2>Alarms Predictor</h2>
             </div>
             <nav>
-                <img onClick={() => setIsToggled(prev => !prev)}
-                     className={"burger-menu " + (isToggled ? "toggled" : "")}
+                <button
+                    className="unstyled-button"
+                    onClick={() => setIsToggled(prev => !prev)}>
+                    <img className={"burger-menu " + (isToggled ? "toggled" : "")}
                      src={burger} alt="menu"/>
+                </button>
 
-                <div  className="dropdown-content">
-                    <ul className="dropdown-links">
+                <div className={"dropdown-content " + (isToggled ? "toggled" : "")}>
+                    <ul className={"dropdown-links"}>
                         <NavRoutes location={location}/>
                     </ul>
                 </div>
@@ -32,7 +35,7 @@ const Header = () => {
     </div>
 }
 
-const NavRoutes = ({location}: {location: Location}) => {
+const NavRoutes = ({location}: { location: Location }) => {
     return ROUTES.map((route: RouteType, index) => (
         <li key={index} className={location.pathname.endsWith(route.path) ? "active" : ""}>
             <Link to={route.path}>{route.label}</Link>

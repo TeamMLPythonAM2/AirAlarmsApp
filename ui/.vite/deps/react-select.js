@@ -669,7 +669,7 @@ var StyleSheet = function() {
   return StyleSheet2;
 }();
 
-// node_modules/stylis/src/Enum.js
+// node_modules/stylis/icons/Enum.js
 var MS = "-ms-";
 var MOZ = "-moz-";
 var WEBKIT = "-webkit-";
@@ -680,7 +680,7 @@ var IMPORT = "@import";
 var KEYFRAMES = "@keyframes";
 var LAYER = "@layer";
 
-// node_modules/stylis/src/Utility.js
+// node_modules/stylis/icons/Utility.js
 var abs = Math.abs;
 var from = String.fromCharCode;
 var assign = Object.assign;
@@ -718,7 +718,7 @@ function combine(array, callback) {
   return array.map(callback).join("");
 }
 
-// node_modules/stylis/src/Tokenizer.js
+// node_modules/stylis/icons/Tokenizer.js
 var line = 1;
 var column = 1;
 var length = 0;
@@ -854,7 +854,7 @@ function identifier(index2) {
   return slice(index2, position);
 }
 
-// node_modules/stylis/src/Parser.js
+// node_modules/stylis/icons/Parser.js
 function compile(value) {
   return dealloc(parse("", null, null, null, [""], value = alloc(value), 0, [0], value));
 }
@@ -1003,7 +1003,7 @@ function declaration(value, root, parent, length2) {
   return node(value, root, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2);
 }
 
-// node_modules/stylis/src/Serializer.js
+// node_modules/stylis/icons/Serializer.js
 function serialize(children, callback) {
   var output = "";
   var length2 = sizeof(children);
@@ -1028,7 +1028,7 @@ function stringify(element, index2, children, callback) {
   return strlen(children = serialize(element.children, callback)) ? element.return = element.value + "{" + children + "}" : "";
 }
 
-// node_modules/stylis/src/Middleware.js
+// node_modules/stylis/icons/Middleware.js
 function middleware(collection) {
   var length2 = sizeof(collection);
   return function(element, index2, children, callback) {
@@ -2258,15 +2258,15 @@ var pkg = {
   },
   imports: {
     "#is-development": {
-      development: "./src/conditions/true.ts",
-      "default": "./src/conditions/false.ts"
+      development: "./icons/conditions/true.ts",
+      "default": "./icons/conditions/false.ts"
     },
     "#is-browser": {
-      "edge-light": "./src/conditions/false.ts",
-      workerd: "./src/conditions/false.ts",
-      worker: "./src/conditions/false.ts",
-      browser: "./src/conditions/true.ts",
-      "default": "./src/conditions/is-browser.ts"
+      "edge-light": "./icons/conditions/false.ts",
+      workerd: "./icons/conditions/false.ts",
+      worker: "./icons/conditions/false.ts",
+      browser: "./icons/conditions/true.ts",
+      "default": "./icons/conditions/is-browser.ts"
     }
   },
   files: [

@@ -20,7 +20,8 @@ const getPrediction = async (region: string, range: string) => {
     if (!region) return "";
 
     const queryData = constructQueryData(region, range);
-    const query_url = `${BASE_REQUEST_URL}/prediction`;
+    const query_url = `${BASE_REQUEST_URL}/api/prediction`;
+    console.log(query_url)
     const response = await fetch(query_url, {
         method: "GET",
         headers: {
