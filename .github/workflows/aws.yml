@@ -27,7 +27,7 @@ jobs:
           git pull
           cd /home/ubuntu/AirAlarmsApp/ui
           npm install
-          tsc -b && vite build
+          npx tsc -b && vite build
           cd /home/ubuntu/AirAlarmsApp
           . .venv/bin/activate
           pip install -r requirements.txt
