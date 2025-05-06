@@ -13,23 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install build tools for UI
-      run: sudo apt-get update && sudo apt-get install -y build-essential python3 g++ make
-
-    - name: Install dependencies for UI
-      run: |
-        cd ui
-        npm install
-
-    - name: Build the UI with Vite
-      run: |
-        cd ui
-        npm run build
-
-    - name: Install Python dependencies for Server
-      run: |
-        pip install -r requirements.txt
-
     - name: Deploy to EC2
       run: |
         mkdir -p ~/.ssh
