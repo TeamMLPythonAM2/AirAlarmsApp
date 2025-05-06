@@ -2,7 +2,7 @@ name: Test Pull Request
 
 on:
   pull_request:
-      branches: [ "main" ]
+    branches: [ "main" ]
 
 jobs:
   test:
@@ -10,5 +10,4 @@ jobs:
       
     steps:
     - name: Start
-        echo "Testing your PR"
-  
+      run: echo "Testing your PR"
