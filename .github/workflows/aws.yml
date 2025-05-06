@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main  # or your deployment branch
+      - main
 
 jobs:
   deploy:
@@ -13,21 +13,36 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
+    # Install build tools for UI (Node.js)
+    - name: Install build tools for UI
+      run: sudo apt-get update && sudo apt-get install -y build-essential python3 g++ make
 
-    - name: Copy files to EC2
+    # Install dependencies for UI
+    - name: Install dependencies for UI
       run: |
-        rsync -avz -e "ssh -i ~/.ssh/id_rsa" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app
+        cd ui
+        npm install
 
+    # Build the Vite React app
+    - name: Build the UI with Vite
+      run: |
+        cd ui
+        npm run build
+
+    # Install Python dependencies for the server
+    - name: Install Python dependencies for Server
+      run: |
+        cd server
+        pip install -r requirements.txt
+
+    # Deploy to EC2 (example)
     - name: Deploy to EC2
       run: |
         ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /home/${{ secrets.EC2_USER }}/app
+          cd /home/${{ secrets.EC2_USER }}/app/ui
           npm install
           npm run build
-          pm2 restart all
+          cd /home/${{ secrets.EC2_USER }}/app/server
+          pip install -r requirements.txt
+          uvicorn main:app --host 0.0.0.0 --port 8000
         EOF
