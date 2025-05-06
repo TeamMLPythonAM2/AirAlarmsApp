@@ -47,7 +47,7 @@ jobs:
           pip install -r requirements.txt
         EOF
       env:
-        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        EC2_KEY: ${{ secrets.EC2_KEY }}
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
 
