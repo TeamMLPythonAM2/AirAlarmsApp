@@ -6,12 +6,17 @@ on:
       - main
 
 jobs:
+
   deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Test network connectivity
+      run: |
+        ping -c 4 $HOST_IP
 
     - name: Deploy to EC2
       run: |
